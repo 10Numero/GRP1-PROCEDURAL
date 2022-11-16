@@ -1,18 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[RequireComponent(typeof(EnemyEyes))]
 public class EnemyController : MonoBehaviour
 {
-    private Transform player;
     private Rigidbody2DMovement movement;
-
-    private RoomEnemiesManager enemiesManager;
+    [SerializeField] private EnemyEyes eyes;
 
     private void Awake()
     {
         movement = GetComponent<Rigidbody2DMovement>();
-        player = FindObjectOfType<PlayerController>().transform;
-        enemiesManager = GetComponentInParent<RoomEnemiesManager>();
-        enemiesManager.AddEnemyToRoom(this);
+        eyes.OnFindTargetUpdate += OnFindTargetUpdate;
+    }
+
+    private void OnFindTargetUpdate(Transform obj)
+    {
+        // see player
+        if (obj != null)
+        {
+            movement.SetDirection(transform.right);
+            
+            // look at
+            var dir = obj.position - transform.position;
+            var angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        else
+            movement.SetDirection(Vector2.zero);
+    }
+
+    private void OnValidate()
+    {
+        eyes = GetComponent<EnemyEyes>();
     }
 
     private void Start()
@@ -25,16 +44,8 @@ public class EnemyController : MonoBehaviour
         movement.SetDirection(Vector2.zero);
     }
 
-    private void FixedUpdate()
-    {
-        if (player == null)
-            return;
-
-        movement.SetDirection(player.position - transform.position);
-    }
-
     private void OnDestroy()
     {
-        enemiesManager.RemoveEnemyFromRoom(this);
+        eyes.OnFindTargetUpdate -= OnFindTargetUpdate;
     }
 }

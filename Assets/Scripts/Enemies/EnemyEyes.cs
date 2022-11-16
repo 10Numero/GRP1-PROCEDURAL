@@ -29,9 +29,13 @@ public class EnemyEyes : MonoBehaviour
         
         var dirToTarget = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
 
-        var angle = Mathf.Abs((float) (GetAngle(transform.forward, dirToTarget)));
+        // Debug.Log("Right < " + transform.right + " > ");
+        
+        var angle = (float) (GetAngle(-transform.right, dirToTarget));
 
-        if (!(angle < viewAngle / 2))
+        // Debug.Log("Angle < " + angle + " >");
+        
+        if (!(angle < viewAngle + transform.rotation.eulerAngles.z / 2))
         {
             OnFindTargetUpdate?.Invoke(null);
             return;
@@ -52,11 +56,11 @@ public class EnemyEyes : MonoBehaviour
         
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(position, viewRadius);
-        var dirLeft = -AngleToDir((viewAngle / 2) - 90).normalized;
-        var dirRight = AngleToDir(-(viewAngle / 2) + 90).normalized;
+        var dirLeft = -AngleToDir((viewAngle / 2) - 90 - (float)GetAngle(-transform.right, (Vector2)transform.rotation.eulerAngles)).normalized;
+        var dirRight = AngleToDir(-(viewAngle / 2) + 90 - (float)GetAngle(-transform.right, (Vector2)transform.rotation.eulerAngles)).normalized;
         
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(position, (Vector2)position + (dirRight * viewRadius));
+        Gizmos.DrawLine(position, (Vector2) position + (dirRight * viewRadius));
         Gizmos.DrawLine(position, (Vector2)position + (dirLeft * viewRadius));
     }
 
