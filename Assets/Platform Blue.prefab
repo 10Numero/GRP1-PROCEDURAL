@@ -100,12 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86da42293f7b9941bbb2e1492de9c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   moveXOrY: 1
   moveXAndY: 0
-  rotateZ: 0
-  type: 0
   moveSpeedRange: {x: 2, y: 8}
-  rotateSpeedRange: {x: 75, y: 100}
+  rotateSpeed: 75
   blockingLayers:
     serializedVersion: 2
     m_Bits: 128

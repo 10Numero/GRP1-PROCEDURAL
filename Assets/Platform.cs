@@ -6,14 +6,13 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     [Header("Behaviour")]
+    [SerializeField] private ColorType type;
     [SerializeField] private bool moveXOrY = false;
     [SerializeField] private bool moveXAndY = false;
-    [SerializeField] private bool rotateZ = false;
 
     [Header("Parameters")]
-    [SerializeField] private ColorType type;
     [SerializeField] private Vector2 moveSpeedRange = new Vector2(2, 8);
-    [SerializeField] private Vector2 rotateSpeedRange = new Vector2(75, 100);
+    [SerializeField] private float rotateSpeed = 75;
     [SerializeField] private LayerMask blockingLayers;
 
     private Rigidbody2D rb;
@@ -21,13 +20,14 @@ public class Platform : MonoBehaviour
     private Vector2 speed;
     private Vector2 speedSign;
 
-    private float rotateSpeed;
+    private float targetRotation;
     private float rotateSign;
+
+    private bool active = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
 
         rb.constraints = RigidbodyConstraints2D.None;
         if (moveXOrY)
@@ -48,18 +48,24 @@ public class Platform : MonoBehaviour
             rb.constraints |= RigidbodyConstraints2D.FreezePositionY;
         }
 
-        if (!rotateZ)
-        {
-            rb.constraints |= RigidbodyConstraints2D.FreezeRotation;
-        }
-
         transform.rotation = Quaternion.identity;
 
         speed = new Vector2(Random.Range(moveSpeedRange.x, moveSpeedRange.y), Random.Range(moveSpeedRange.x, moveSpeedRange.y));
         speedSign = new Vector2(Random.Range(0f, 1f) > 0.5f ? 1 : -1, Random.Range(0f, 1f) > 0.5f ? 1 : -1);
 
-        rotateSpeed = Random.Range(rotateSpeedRange.x, rotateSpeedRange.y);
-        rotateSign = Random.Range(0f, 1f) > 0.5f ? 1 : -1;
+        targetRotation = 0;
+        rotateSign = -1;
+    }
+
+    public void Activate()
+    {
+        active = true;
+
+        if (type == ColorType.Green)
+        {
+            rotateSign *= -1;
+            targetRotation = targetRotation == 90 ? 0 : 90;
+        }
     }
 
     #region Editor
@@ -102,8 +108,27 @@ public class Platform : MonoBehaviour
 
     private void Update()
     {
-        rb.velocity = speedSign * speed;
-        rb.angularVelocity = rotateSign * rotateSpeed;
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            Activate();
+        }
+
+        if (active)
+        {
+            rb.velocity = speedSign * speed;
+
+            if (type == ColorType.Green)
+            {
+                rb.angularVelocity = rotateSign * rotateSpeed;
+
+                transform.rotation = Quaternion.Euler(0, 0, Mathf.Clamp(transform.rotation.eulerAngles.z > 180 ? transform.rotation.eulerAngles.z - 360 : transform.rotation.eulerAngles.z, 0, 90));
+                if (transform.rotation.eulerAngles.z == targetRotation)
+                {
+                    active = false;
+                    rb.angularVelocity = 0;
+                }
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
