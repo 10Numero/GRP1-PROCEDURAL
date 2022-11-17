@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3475515730257596951}
   - component: {fileID: 1769474416022004137}
   - component: {fileID: 4382924818771424208}
+  - component: {fileID: 6453392877763751703}
   m_Layer: 12
   m_Name: BaseRoom
   m_TagString: Untagged
@@ -119,6 +120,23 @@ MonoBehaviour:
     m_Event:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &6453392877763751703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3475515730257596945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f03b0977d9985645b6a7bae322538dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomComposition: {fileID: 0}
+  _topRoom: {fileID: 0}
+  _rightRoom: {fileID: 0}
+  _bottomRoom: {fileID: 0}
+  _leftRoom: {fileID: 0}
 --- !u!1 &3475515730765684161
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,26 +2613,14 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3475515731568567537}
     m_ColliderPaths:
-    - - X: 100
-        Y: -50000041
-      - X: 100
-        Y: -50000000
-      - X: 100000000
-        Y: -50000000
-      - X: 100000000
+    - - X: 100000000
         Y: 50000000
       - X: -100000000
         Y: 50000000
       - X: -100000000
         Y: -50000000
-      - X: -10000100
+      - X: 100000000
         Y: -50000000
-      - X: -10000100
-        Y: -50000041
-      - X: -10000041
-        Y: -50000100
-      - X: 41
-        Y: -50000100
     - - X: -90000000
         Y: -40000000
       - X: -90000000
@@ -2622,18 +2628,6 @@ CompositeCollider2D:
       - X: 90000000
         Y: 40000000
       - X: 90000000
-        Y: -40000000
-      - X: 100
-        Y: -40000000
-      - X: 100
-        Y: -39999959
-      - X: 41
-        Y: -39999900
-      - X: -10000041
-        Y: -39999900
-      - X: -10000100
-        Y: -39999959
-      - X: -10000100
         Y: -40000000
   m_CompositePaths:
     m_Paths:
