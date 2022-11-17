@@ -59,13 +59,15 @@ public class Platform : MonoBehaviour
 
     public void Activate()
     {
+        if (active)
+        {
+            return;
+        }
+
         active = true;
 
-        if (type == ColorType.Green)
-        {
-            rotateSign *= -1;
-            targetRotation = targetRotation == 90 ? 0 : 90;
-        }
+        rotateSign *= -1;
+        targetRotation = targetRotation == 90 ? 0 : 90;
     }
 
     public ColorType Type => type;
@@ -114,16 +116,13 @@ public class Platform : MonoBehaviour
         {
             rb.velocity = speedSign * speed;
 
-            if (type == ColorType.Green)
-            {
-                rb.angularVelocity = rotateSign * rotateSpeed;
+            rb.angularVelocity = rotateSign * rotateSpeed;
 
-                transform.rotation = Quaternion.Euler(0, 0, Mathf.Clamp(transform.rotation.eulerAngles.z > 180 ? transform.rotation.eulerAngles.z - 360 : transform.rotation.eulerAngles.z, 0, 90));
-                if (transform.rotation.eulerAngles.z == targetRotation)
-                {
-                    active = false;
-                    rb.angularVelocity = 0;
-                }
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Clamp(transform.rotation.eulerAngles.z > 180 ? transform.rotation.eulerAngles.z - 360 : transform.rotation.eulerAngles.z, 0, 90));
+            if (transform.rotation.eulerAngles.z == targetRotation)
+            {
+                active = false;
+                rb.angularVelocity = 0;
             }
         }
         else

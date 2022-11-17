@@ -19,7 +19,7 @@ TagManager:
   - Spikes
   - Bullets
   - Rooms
-  - 
+  - Platform
   - 
   - 
   - 
@@ -53,6 +53,9 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 3288026613
+    locked: 0
+  - name: PlayerLight
+    uniqueID: 1746529017
     locked: 0
   - name: Player
     uniqueID: 1028839893

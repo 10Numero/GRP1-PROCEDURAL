@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "InstaDie",
+                    "name": "ChangeLight",
                     "type": "Button",
                     "id": "14f24a2b-8661-4caf-b800-ef64d1d02627",
                     "expectedControlType": "Button",
@@ -147,11 +147,11 @@
                 {
                     "name": "",
                     "id": "96e3af49-f450-48d6-837d-a2e7c195cec5",
-                    "path": "<Keyboard>/space",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "InstaDie",
+                    "action": "ChangeLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
