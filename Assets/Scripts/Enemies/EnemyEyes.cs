@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class EnemyEyes : MonoBehaviour
 {
@@ -18,24 +20,41 @@ public class EnemyEyes : MonoBehaviour
     [Header("Collider")] [SerializeField] 
     private CircleCollider2D col2d;
 
-    private List<Transform> visibleTargets = new List<Transform>();
+    // transform.right not working properly, same for transform.TransformDirection
+    private Vector2 LocalDir()
+    {
+        var angle = transform.eulerAngles.z * Mathf.Deg2Rad;
+        var sin = Mathf.Sin( angle );
+        var cos = Mathf.Cos( angle );
+ 
+        Vector2 forward = new Vector3(
+            Vector2.right.x * cos - Vector2.right.y * sin,
+            Vector2.right.x * sin + Vector2.right.y * cos,
+            0f );
+
+        return forward;
+    }
 
     public System.Action<Transform> OnFindTargetUpdate;
-
+    
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!IsInLayerMask(other))
             return;
         
         var dirToTarget = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
-
-        // Debug.Log("Right < " + transform.right + " > ");
         
-        var angle = (float) (GetAngle(-transform.right, dirToTarget));
-
-        // Debug.Log("Angle < " + angle + " >");
+        var angle = (GetAngle(LocalDir(), dirToTarget));
         
-        if (!(angle < viewAngle + transform.rotation.eulerAngles.z / 2))
+        if (!(Mathf.Abs(angle) < viewAngle / 2))
+        {
+            OnFindTargetUpdate?.Invoke(null);
+            return;
+        }
+
+        // if hit obstacle, return
+        if (Physics2D.Raycast(transform.position, dirToTarget, 50, obstacleMask))
         {
             OnFindTargetUpdate?.Invoke(null);
             return;
@@ -52,16 +71,21 @@ public class EnemyEyes : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        var position = transform.position;
+        var tr = transform;
+        var position = tr.position;
+        var rotation = tr.rotation;
         
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(position, viewRadius);
-        var dirLeft = -AngleToDir((viewAngle / 2) - 90 - (float)GetAngle(-transform.right, (Vector2)transform.rotation.eulerAngles)).normalized;
-        var dirRight = AngleToDir(-(viewAngle / 2) + 90 - (float)GetAngle(-transform.right, (Vector2)transform.rotation.eulerAngles)).normalized;
+        var dirLeft = -AngleToDir((viewAngle / 2) - 90 - rotation.eulerAngles.z);
+        var dirRight = AngleToDir(-(viewAngle / 2) + 90 - rotation.eulerAngles.z);
         
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(position, (Vector2) position + (dirRight * viewRadius));
         Gizmos.DrawLine(position, (Vector2)position + (dirLeft * viewRadius));
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(position, LocalDir() * viewRadius + (Vector2)position);
     }
 
     private static Vector2 AngleToDir(float __angle)
@@ -74,8 +98,8 @@ public class EnemyEyes : MonoBehaviour
         return targetMask == (targetMask | (1 << comp.gameObject.layer));
     }
 
-    private static double GetAngle(Vector2 me, Vector2 target) 
+    private static float GetAngle(Vector2 me, Vector2 target) 
     {
-        return Math.Atan2(target.y - me.y, target.x - me.x) * (180/Math.PI);
+        return Vector2.SignedAngle(me, target);
     }
 }
