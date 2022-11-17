@@ -68,6 +68,8 @@ public class Platform : MonoBehaviour
         }
     }
 
+    public ColorType Type => type;
+
     #region Editor
 #if UNITY_EDITOR
 
@@ -106,13 +108,8 @@ public class Platform : MonoBehaviour
 #endif
     #endregion
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            Activate();
-        }
-
         if (active)
         {
             rb.velocity = speedSign * speed;
@@ -128,6 +125,11 @@ public class Platform : MonoBehaviour
                     rb.angularVelocity = 0;
                 }
             }
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0;
         }
     }
 
