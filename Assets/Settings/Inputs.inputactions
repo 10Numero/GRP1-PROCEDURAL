@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "ActivateLight",
+                    "type": "Button",
+                    "id": "24f1ccdb-99be-4907-a806-335f5764a618",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ChangeLight",
                     "type": "Button",
                     "id": "14f24a2b-8661-4caf-b800-ef64d1d02627",
@@ -147,11 +156,22 @@
                 {
                     "name": "",
                     "id": "96e3af49-f450-48d6-837d-a2e7c195cec5",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ChangeLight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "688baa39-7b47-4eb0-83b8-a11157cebea8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 5229877159294706213}
   - component: {fileID: 8129036900790834818}
   - component: {fileID: 3812861786456559152}
-  - component: {fileID: 97067257165290452}
+  - component: {fileID: 118727335819703923}
   m_Layer: 14
   m_Name: Light
   m_TagString: Untagged
@@ -125,7 +125,7 @@ SpriteShapeRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Color: {r: 1, g: 0, b: 0, a: 0.20392157}
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_ShapeTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Sprites:
   - {fileID: 21300000, guid: 0ae2b74b1edd14bb18dd7b65ae916a54, type: 3}
@@ -138,8 +138,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0.138165, y: 1.2098305, z: 0}
-    m_Extent: {x: 3.627283, y: 2.5501697, z: 0}
+    m_Center: {x: -0.047093034, y: 1.270474, z: 0}
+    m_Extent: {x: 1.1861949, y: 2.6108131, z: 0}
 --- !u!114 &5229877159294706213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,9 +165,9 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: -3.1933334, y: 2.3100004, z: 0}
-      leftTangent: {x: -0.44825816, y: -0.5379096, z: 0}
-      rightTangent: {x: 0.33333325, y: 0.4000001, z: 0}
+    - position: {x: -0.76518506, y: 3.4123096, z: 0}
+      leftTangent: {x: -0.5452985, y: -0.5147948, z: 0}
+      rightTangent: {x: 0.0817945, y: 0.07721877, z: 0}
       mode: 1
       height: 1
       bevelCutoff: 0
@@ -175,9 +175,19 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 0.14000002, y: 3.5100005, z: 0}
-      leftTangent: {x: -1.4806789, y: 0.0000121593475, z: 0}
-      rightTangent: {x: 1.3459798, y: -0.00006723404, z: 0}
+    - position: {x: -0.5208737, y: 3.5536332, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0.20051938, y: 0.08168864, z: 0}
+      mode: 2
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: -0.05743918, y: 3.631252, z: 0}
+      leftTangent: {x: -0.24130982, y: 0.000042676926, z: 0}
+      rightTangent: {x: 0.22757566, y: -0.00004029274, z: 0}
       mode: 1
       height: 1
       bevelCutoff: 0
@@ -185,9 +195,19 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 3.4733334, y: 2.3100004, z: 0}
-      leftTangent: {x: -0.33333325, y: 0.4000001, z: 0}
-      rightTangent: {x: 0.44747996, y: -0.53697586, z: 0}
+    - position: {x: 0.37239885, y: 3.5678954, z: 0}
+      leftTangent: {x: -0.1456783, y: 0.05887723, z: 0}
+      rightTangent: {x: 0.14771813, y: -0.059701443, z: 0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 0.6273392, y: 3.4199433, z: 0}
+      leftTangent: {x: -0.11976379, y: 0.099099874, z: 0}
+      rightTangent: {x: 0.6013618, y: -0.49760222, z: 0}
       mode: 1
       height: 1
       bevelCutoff: 0
@@ -214,8 +234,8 @@ MonoBehaviour:
   m_WorldSpaceUV: 0
   m_CornerAngleThreshold: 30
   m_ColliderDetail: 16
-  m_ColliderOffset: 0.5
-  m_UpdateCollider: 0
+  m_ColliderOffset: 0.023
+  m_UpdateCollider: 1
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
   m_EnableTangents: 0
@@ -235,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 33280
   platformLayer:
     serializedVersion: 2
     m_Bits: 8192
@@ -260,14 +280,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!60 &97067257165290452
+--- !u!60 &118727335819703923
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4660111867402942303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -285,23 +305,38 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.906836, y: 2.767337}
-      - {x: 1.4138808, y: 3.348748}
-      - {x: 0.06495093, y: 3.5313582}
-      - {x: -1.2763364, y: 3.3153553}
-      - {x: -2.5607445, y: 2.8043504}
-      - {x: -3.238372, y: 2.3123314}
-      - {x: -3.231264, y: 1.957356}
-      - {x: -2.9302778, y: 1.3927745}
-      - {x: -2.2489974, y: 0.5628378}
-      - {x: -0.9704583, y: -0.657625}
-      - {x: -0.27336335, y: -1.0902165}
-      - {x: 0.22022994, y: -1.0902162}
-      - {x: 1.0452474, y: -0.606396}
-      - {x: 2.0130906, y: 0.20352006}
-      - {x: 3.0585861, y: 1.2929857}
-      - {x: 3.5121813, y: 2.0096412}
-      - {x: 3.514702, y: 2.321528}
+    - - {x: -0.19334364, y: -1.1014996}
+      - {x: -0.30079395, y: -1.0504594}
+      - {x: -0.4172486, y: -0.90073574}
+      - {x: -0.5216468, y: -0.67526424}
+      - {x: -0.6589231, y: -0.23970573}
+      - {x: -0.7945025, y: 0.34457543}
+      - {x: -0.8655174, y: 0.75543404}
+      - {x: -0.9287999, y: 1.2367755}
+      - {x: -0.97311914, y: 1.7353806}
+      - {x: -0.99482596, y: 2.4013758}
+      - {x: -0.97801083, y: 2.7475042}
+      - {x: -0.9372465, y: 3.0413013}
+      - {x: -0.87003464, y: 3.270038}
+      - {x: -0.52521247, y: 3.5642834}
+      - {x: 0.17727023, y: 3.6346521}
+      - {x: 0.61237216, y: 3.44723}
+      - {x: 0.74286807, y: 3.2811093}
+      - {x: 0.82061654, y: 3.0541599}
+      - {x: 0.871208, y: 2.7612808}
+      - {x: 0.8971579, y: 2.4153342}
+      - {x: 0.89947176, y: 2.001071}
+      - {x: 0.8711424, y: 1.4650891}
+      - {x: 0.79686743, y: 0.7649924}
+      - {x: 0.7310233, y: 0.35232633}
+      - {x: 0.629428, y: -0.12583223}
+      - {x: 0.5646056, y: -0.37981266}
+      - {x: 0.46798807, y: -0.6727607}
+      - {x: 0.36481526, y: -0.89953816}
+      - {x: 0.2557727, y: -1.0475295}
+      - {x: 0.14252646, y: -1.1012186}
+      - {x: -0.102489315, y: -1.1015887}
+      - {x: -0.19334364, y: -1.1014996}
 --- !u!1 &6388184427874494322
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +594,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 85b78d03-ae04-40bb-bf2a-64434d5573f8
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4083622184634578875}
+        m_TargetAssemblyTypeName: PlayerLight, Assembly-CSharp
+        m_MethodName: OnActivateLight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 24f1ccdb-99be-4907-a806-335f5764a618
+    m_ActionName: Player/ActivateLight[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -588,6 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ff9e9ceb853ee41a92581d853000a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightGameObject: {fileID: 4660111867402942303}
   lightRenderer: {fileID: 7053449909436934334}
   red: {r: 1, g: 0, b: 0, a: 0.2509804}
   green: {r: 0, g: 1, b: 0, a: 0.2509804}

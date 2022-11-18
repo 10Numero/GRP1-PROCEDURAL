@@ -8,6 +8,7 @@ using UnityEngine.U2D;
 public class PlayerLight : MonoBehaviour
 {
     [Header("Dependencies")]
+    [SerializeField] GameObject lightGameObject;
     [SerializeField] SpriteShapeRenderer lightRenderer;
 
     [Header("Parameters")]
@@ -20,8 +21,14 @@ public class PlayerLight : MonoBehaviour
     private int currentEnumVal;
     private List<int> enumVals;
 
+    private bool isActive;
+
     private void Awake()
     {
+        isActive = false;
+        SetLight(0);
+        lightGameObject.SetActive(false);
+
         enumVals = new List<int>();
         string[] biomeTypesStr = Enum.GetNames(typeof(ColorType));
         for (int i = 0; i < biomeTypesStr.Length; i++)
@@ -29,12 +36,15 @@ public class PlayerLight : MonoBehaviour
             ColorType type = (ColorType)Enum.Parse(typeof(ColorType), biomeTypesStr[i]);
             enumVals.Add((int)type);
         }
-
-        SetLight(0);
     }
 
     void UpdateLight()
     {
+        if (!isActive)
+        {
+            return;
+        }
+
         switch (lightType)
         {
             case ColorType.Red:
@@ -57,14 +67,48 @@ public class PlayerLight : MonoBehaviour
         CycleLight();
     }
 
+    public void OnActivateLight(InputAction.CallbackContext input)
+    {
+        if (input.started)
+        {
+            Activate();
+        }
+        else if (input.canceled)
+        {
+            Desactivate();
+        }
+    }
+
+    void Activate()
+    {
+        isActive = true;
+        lightGameObject.SetActive(true);
+    }
+
+    void Desactivate()
+    {
+        isActive = false;
+        lightGameObject.SetActive(false);
+    }
+
     void SetLight(ColorType type)
     {
+        if (!isActive)
+        {
+            return;
+        }
+
         lightType = type;
         UpdateLight();
     }
 
     void SetLight(int i)
     {
+        if (!isActive)
+        {
+            return;
+        }
+
         currentEnumVal = i % enumVals.Count;
         CastEnumVal();
         UpdateLight();
@@ -72,6 +116,11 @@ public class PlayerLight : MonoBehaviour
 
     void CycleLight()
     {
+        if (!isActive)
+        {
+            return;
+        }
+
         currentEnumVal = (currentEnumVal + 1) % enumVals.Count;
         CastEnumVal();
         UpdateLight();
