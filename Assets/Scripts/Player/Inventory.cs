@@ -4,7 +4,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public IReadOnlyList<Pickup> allPickups => pickups.AsReadOnly();
-    private readonly List<Pickup> pickups = new();
+    public readonly List<Pickup> pickups = new();
 
     public void AddPickup(IEnumerable<Pickup> toAdd)
     {
