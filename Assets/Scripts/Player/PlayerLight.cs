@@ -15,18 +15,26 @@ public class PlayerLight : MonoBehaviour
     [SerializeField] Color red;
     [SerializeField] Color green;
     [SerializeField] Color blue;
-
-    private ColorType lightType = ColorType.Red;
-
-    private int currentEnumVal;
+    
     private List<int> enumVals;
+
+    private int m_current = 0;
+    private int current
+    {
+        get => m_current;
+        set
+        {
+            m_current = value;
+            UpdateColor();
+        }
+    }
+    private List<ColorType> accessable;
 
     private bool isActive;
 
     private void Awake()
     {
         isActive = false;
-        SetLight(0);
         lightGameObject.SetActive(false);
 
         enumVals = new List<int>();
@@ -36,27 +44,11 @@ public class PlayerLight : MonoBehaviour
             ColorType type = (ColorType)Enum.Parse(typeof(ColorType), biomeTypesStr[i]);
             enumVals.Add((int)type);
         }
-    }
 
-    void UpdateLight()
-    {
-        if (!isActive)
-        {
-            return;
-        }
 
-        switch (lightType)
-        {
-            case ColorType.Red:
-                lightRenderer.color = red;
-                break;
-            case ColorType.Green:
-                lightRenderer.color = green;
-                break;
-            case ColorType.Blue:
-                lightRenderer.color = blue;
-                break;
-        }
+        accessable = new List<ColorType>();
+        accessable.Add((ColorType)enumVals[0]);
+        current = 0;
     }
 
     public void OnChangeLight(InputAction.CallbackContext input)
@@ -79,6 +71,19 @@ public class PlayerLight : MonoBehaviour
         }
     }
 
+    public ColorType Light => accessable[current];
+
+    public void AddColor()
+    {
+        if (accessable.Count == enumVals.Count)
+        {
+            return;
+        }
+
+        accessable.Add((ColorType)enumVals[accessable.Count]);
+        current = accessable.Count - 1;
+    }
+
     void Activate()
     {
         isActive = true;
@@ -91,29 +96,6 @@ public class PlayerLight : MonoBehaviour
         lightGameObject.SetActive(false);
     }
 
-    void SetLight(ColorType type)
-    {
-        if (!isActive)
-        {
-            return;
-        }
-
-        lightType = type;
-        UpdateLight();
-    }
-
-    void SetLight(int i)
-    {
-        if (!isActive)
-        {
-            return;
-        }
-
-        currentEnumVal = i % enumVals.Count;
-        CastEnumVal();
-        UpdateLight();
-    }
-
     void CycleLight()
     {
         if (!isActive)
@@ -121,13 +103,23 @@ public class PlayerLight : MonoBehaviour
             return;
         }
 
-        currentEnumVal = (currentEnumVal + 1) % enumVals.Count;
-        CastEnumVal();
-        UpdateLight();
+        current = (current + 1) % accessable.Count;
     }
 
-    void CastEnumVal()
+    void UpdateColor()
     {
-        lightType = (ColorType)enumVals[currentEnumVal];
+        switch (accessable[current])
+        {
+            default:
+            case ColorType.Green:
+                lightRenderer.color = green;
+                break;
+            case ColorType.Blue:
+                lightRenderer.color = blue;
+                break;
+            case ColorType.Red:
+                lightRenderer.color = red;
+                break;
+        }
     }
 }

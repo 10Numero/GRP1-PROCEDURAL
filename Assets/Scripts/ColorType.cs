@@ -1,7 +1,7 @@
 
 public enum ColorType
 {
-    Red,
-    Blue,
-    Green,
+    Green = 0,
+    Blue = 1,
+    Red = 2,
 }

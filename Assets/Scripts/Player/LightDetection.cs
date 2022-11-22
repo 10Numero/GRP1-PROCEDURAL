@@ -5,20 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class LightDetection : MonoBehaviour
 {
-    [SerializeField] LayerMask objectLayer;
-    [SerializeField] LayerMask platformLayer;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerLight playerLight;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (((1 << other.gameObject.layer) & objectLayer) != 0)
+        var intractable = other.gameObject.GetComponent<LightInteractable>();
+        if (intractable && intractable.room == playerController.room)
         {
-            // object enter
-            
-        }
-        else if (((1 << other.gameObject.layer) & platformLayer) != 0)
-        {
-            // platform
-
+            intractable.Interact(playerLight.Light);
         }
     }
 }
