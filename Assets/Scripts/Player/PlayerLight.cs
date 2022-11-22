@@ -34,7 +34,7 @@ public class PlayerLight : MonoBehaviour
 
     private void Awake()
     {
-        lightRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        //lightRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
         
         isActive = false;
         lightGameObject.SetActive(false);
@@ -74,8 +74,8 @@ public class PlayerLight : MonoBehaviour
     }
 
     public ColorType Light => accessable[current];
-
-    public void AddColor()
+    
+    public void AddNextColor()
     {
         if (accessable.Count == enumVals.Count)
         {
