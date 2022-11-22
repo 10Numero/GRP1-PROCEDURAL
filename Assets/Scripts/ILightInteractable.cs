@@ -1,4 +1,4 @@
-public interface ILightInterractable
+public interface ILightInteractable
 {
     int room { get; set; }
 }
