@@ -104,7 +104,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 3.5
 --- !u!114 &3939420087440083590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,12 +117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8193a1cc5e1024048aae69c5bb5a7df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 5
+  viewRadius: 3.5
   viewAngle: 90
   targetMask:
-    serializedVersion: 2
-    m_Bits: 8191
-  obstacleMask:
     serializedVersion: 2
     m_Bits: 8191
   col2d: {fileID: 3939420087440083589}
@@ -159,7 +156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84992e9856104252b75dcee8a0e55dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyMode: 0
   eyes: {fileID: 3939420087440083590}
+  movement: {fileID: 613942744}
+  _lineMovePoints:
+  - {x: -6, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
+  _spottedPlayer: 0
 --- !u!114 &613942744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,4 +175,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e8c91d838e495398a739916ad2c454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2

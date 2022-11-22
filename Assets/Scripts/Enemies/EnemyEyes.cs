@@ -15,11 +15,12 @@ public class EnemyEyes : MonoBehaviour
 
     [Header("Layers")]
     [SerializeField] private LayerMask targetMask;
-    [SerializeField] private LayerMask obstacleMask;
 
     [Header("Collider")] [SerializeField] 
     private CircleCollider2D col2d;
 
+    private const float PLAYER_RADIUS = 1;
+    
     // transform.right not working properly, same for transform.TransformDirection
     private Vector2 LocalDir()
     {
@@ -36,15 +37,16 @@ public class EnemyEyes : MonoBehaviour
     }
 
     public System.Action<Transform> OnFindTargetUpdate;
+    private bool _invoke;
     
     
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!IsInLayerMask(other))
             return;
-        
+
         var dirToTarget = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
-        
+
         var angle = (GetAngle(LocalDir(), dirToTarget));
         
         if (!(Mathf.Abs(angle) < viewAngle / 2))
@@ -53,15 +55,27 @@ public class EnemyEyes : MonoBehaviour
             return;
         }
 
-        // if hit obstacle, return
-        if (Physics2D.Raycast(transform.position, dirToTarget, 50, obstacleMask))
+        // in view
+        if (Vector3.Distance(transform.position, other.transform.position) < viewRadius + PLAYER_RADIUS / 2)
+        {
+            OnFindTargetUpdate?.Invoke(other.transform);
+            Debug.Log("I see < " + other.name + " >");
+        }
+        else
+        {
+            OnFindTargetUpdate?.Invoke(null);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!IsInLayerMask(other))
         {
             OnFindTargetUpdate?.Invoke(null);
             return;
         }
-        
-        Debug.Log("I see < " + other.name + " >");
-        OnFindTargetUpdate?.Invoke(other.transform);
+
+        OnFindTargetUpdate?.Invoke(null);
     }
 
     private void UpdateColliderRadius()
