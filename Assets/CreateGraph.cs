@@ -9,17 +9,10 @@ public class CreateGraph : MonoBehaviour
     [SerializeField] private List<Node> _nodesList;
 
 
-    private void Start()
-    {
-        GenerateGraph();
-        DisplayGraph();
-    }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown("space")) DisplayGraph();
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown("space")) DisplayGraph();
+    //}
     public Node GenerateGraph()
     {
         List<Node> nodesList = new List<Node>();
@@ -52,4 +45,8 @@ public class CreateGraph : MonoBehaviour
         }
     }
 
+    public List<Node> getnodes()
+    {
+        return _nodesList;
+    }
 }
