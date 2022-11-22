@@ -34,6 +34,8 @@ public class PlayerLight : MonoBehaviour
 
     private void Awake()
     {
+        lightRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        
         isActive = false;
         lightGameObject.SetActive(false);
 
