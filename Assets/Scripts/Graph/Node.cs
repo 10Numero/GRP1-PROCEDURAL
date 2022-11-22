@@ -51,6 +51,11 @@ public class Node : MonoBehaviour
         return _sideNodes[index];
     }
 
+
+    public Dictionary<int, Node> getSideNodes()
+    {
+        return _sideNodes;
+    }
     public void DisplayNode()
     {
         for(int i = 0; i< 3; i++)

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public RoomComposition_Data roomComposition;
-    public Room _topRoom;
-    public Room _rightRoom;
-    public Room _bottomRoom;
-    public Room _leftRoom;
+    Dictionary<int, Room> _sideRooms = new Dictionary<int, Room>();
 
+    private void Awake()
+    {
+        _sideRooms.Add(0, null);
+        _sideRooms.Add(1, null);
+        _sideRooms.Add(2, null);
+        _sideRooms.Add(3, null);
+    }
 }
