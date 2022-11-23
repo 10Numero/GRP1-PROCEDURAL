@@ -12,9 +12,15 @@ public class PlayerLight : MonoBehaviour
     [SerializeField] SpriteShapeRenderer lightRenderer;
 
     [Header("Parameters")]
+    [SerializeField] bool switchToNewColorWhenAdded = true;
     [SerializeField] Color red;
     [SerializeField] Color green;
     [SerializeField] Color blue;
+
+    [Header("Debug")]
+    [SerializeField] bool enableMask = false;
+
+    public ColorType Light => accessable[current];
     
     private List<int> enumVals;
 
@@ -25,16 +31,35 @@ public class PlayerLight : MonoBehaviour
         set
         {
             m_current = value;
-            UpdateColor();
+
+            switch (accessable[current])
+            {
+                default:
+                case ColorType.Green:
+                    lightRenderer.color = green;
+                    break;
+                case ColorType.Blue:
+                    lightRenderer.color = blue;
+                    break;
+                case ColorType.Red:
+                    lightRenderer.color = red;
+                    break;
+            }
         }
     }
+
     private List<ColorType> accessable;
 
     private bool isActive;
 
     private void Awake()
     {
-        //lightRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+#if UNITY_EDITOR
+        if (enableMask)
+#endif
+        {
+            lightRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        }
         
         isActive = false;
         lightGameObject.SetActive(false);
@@ -55,25 +80,26 @@ public class PlayerLight : MonoBehaviour
 
     public void OnChangeLight(InputAction.CallbackContext input)
     {
-        if (!input.performed)
+        if (!input.performed || !isActive)
             return;
 
-        CycleLight();
+        current = (current + 1) % accessable.Count;
     }
 
     public void OnActivateLight(InputAction.CallbackContext input)
     {
         if (input.started)
         {
-            Activate();
+            isActive = true;
+            lightGameObject.SetActive(true);
         }
         else if (input.canceled)
         {
-            Desactivate();
+            isActive = false;
+            lightGameObject.SetActive(false);
         }
     }
 
-    public ColorType Light => accessable[current];
     
     public void AddNextColor()
     {
@@ -83,45 +109,10 @@ public class PlayerLight : MonoBehaviour
         }
 
         accessable.Add((ColorType)enumVals[accessable.Count]);
-        current = accessable.Count - 1;
-    }
 
-    void Activate()
-    {
-        isActive = true;
-        lightGameObject.SetActive(true);
-    }
-
-    void Desactivate()
-    {
-        isActive = false;
-        lightGameObject.SetActive(false);
-    }
-
-    void CycleLight()
-    {
-        if (!isActive)
+        if (switchToNewColorWhenAdded)
         {
-            return;
-        }
-
-        current = (current + 1) % accessable.Count;
-    }
-
-    void UpdateColor()
-    {
-        switch (accessable[current])
-        {
-            default:
-            case ColorType.Green:
-                lightRenderer.color = green;
-                break;
-            case ColorType.Blue:
-                lightRenderer.color = blue;
-                break;
-            case ColorType.Red:
-                lightRenderer.color = red;
-                break;
+            current = accessable.Count - 1;
         }
     }
 }
