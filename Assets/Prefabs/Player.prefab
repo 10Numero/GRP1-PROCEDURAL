@@ -1,51 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &332741117634931998
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4955694604021262306}
-  - component: {fileID: 8716258351562437284}
-  m_Layer: 6
-  m_Name: Canon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4955694604021262306
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332741117634931998}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4570305563332787}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8716258351562437284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332741117634931998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3aef6617214c38978e9ca65dff121d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 5853427791071713410, guid: d41d9f1b7a4f7b44e97c9fe354697818, type: 3}
-  fireDelay: 0.8
 --- !u!1 &4660111867402942303
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4570305563332787}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1971053207 &7053449909436934334
 SpriteShapeRenderer:
@@ -323,7 +277,6 @@ Transform:
   m_LocalScale: {x: 0.75, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4955694604021262306}
   - {fileID: 564483028059319322}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -472,22 +425,6 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6519666751308008164}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnShoot
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: b2e732a4-9ac5-47eb-91a1-9419a03fc356
-    m_ActionName: Player/Fire[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls:
       - m_Target: {fileID: 4083622184634578875}
         m_TargetAssemblyTypeName: PlayerLight, Assembly-CSharp
         m_MethodName: OnChangeLight
@@ -558,6 +495,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 24f1ccdb-99be-4907-a806-335f5764a618
     m_ActionName: Player/ActivateLight[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6519666751308008164}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnPointer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5382b4ff-c135-4e85-af0b-fca23fe8a6d2
+    m_ActionName: Player/PointerPosition[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -590,9 +543,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightGameObject: {fileID: 4660111867402942303}
   lightRenderer: {fileID: 7053449909436934334}
+  switchToNewColorWhenAdded: 1
   red: {r: 1, g: 0, b: 0, a: 0.2509804}
   green: {r: 0, g: 1, b: 0, a: 0.2509804}
   blue: {r: 0, g: 0, b: 1, a: 0.2509804}
+  enableMask: 0
 --- !u!114 &1402205489
 MonoBehaviour:
   m_ObjectHideFlags: 0

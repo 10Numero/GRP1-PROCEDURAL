@@ -7,13 +7,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastDirection;
     private Life life;
     private Rigidbody2DMovement movement;
-    private Shooter[] shooters;
+
 
     public int room = 0;
 
+    private Vector2 PointerPosition { get; set; }
+
+
     private void Awake()
     {
-        shooters = GetComponentsInChildren<Shooter>();
         life = GetComponent<Life>();
         movement = GetComponent<Rigidbody2DMovement>();
     }
@@ -23,38 +25,22 @@ public class PlayerController : MonoBehaviour
         life.onDie = OnDie();
     }
 
+    private void Update()
+    {
+        transform.up = (PointerPosition - (Vector2)transform.position).normalized;
+    }
+
+    public void OnPointer(InputAction.CallbackContext input)
+    {
+        Vector3 mousePos = input.action.ReadValue<Vector2>();
+        mousePos.z = Camera.main.nearClipPlane;
+        PointerPosition = Camera.main.ScreenToWorldPoint(mousePos);
+
+    }
+
     public void OnMove(InputAction.CallbackContext input)
     {
         movement.SetDirection(input.ReadValue<Vector2>());
-    }
-
-    public void OnShoot(InputAction.CallbackContext input)
-    {
-        if (input.performed)
-        {
-            var inputDirection = input.ReadValue<Vector2>();
-            if (inputDirection.sqrMagnitude <= 1)
-                transform.up = inputDirection;
-            foreach (var shooter in shooters)
-            {
-                shooter.StartShooting();
-            }
-        }
-        else if (input.canceled)
-        {
-            foreach (var shooter in shooters)
-            {
-                shooter.StopShooting();
-            }
-        }
-    }
-
-    public void OnAutoDie(InputAction.CallbackContext input)
-    {
-        if (!input.performed)
-            return;
-
-        life.TakeDamage(life.currentLife);
     }
 
     private IEnumerator OnDie()
