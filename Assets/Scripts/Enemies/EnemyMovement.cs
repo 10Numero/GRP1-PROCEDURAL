@@ -3,13 +3,13 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyEyes))]
-public class EnemyController : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     public enum EnemyMode
     {
-        Stationary,
-        LineMove,
-        FreeMove
+        StationaryRond,
+        LineMoveTriangle,
+        FreeMoveCarre
     }
     
     [Header("Mode")] 
@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
     
     private void Update()
     {
-        if (_enemyMode == EnemyMode.LineMove)
+        if (_enemyMode == EnemyMode.LineMoveTriangle)
         {
             if (_spottedPlayer)
                 return;
@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
                     _lineMovePointIndex = 0;
             }
         }
-        else if (_enemyMode == EnemyMode.FreeMove)
+        else if (_enemyMode == EnemyMode.FreeMoveCarre)
         {
             // only if player is in the room
             LookAt(_playerController.transform.position);

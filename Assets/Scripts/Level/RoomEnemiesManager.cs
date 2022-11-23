@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RoomEnemiesManager : MonoBehaviour
 {
-    private readonly List<EnemyController> enemiesInRoom = new();
+    private readonly List<EnemyMovement> enemiesInRoom = new();
 
     public void SetAllEnemiesInRoomActive(bool isActive)
     {
@@ -13,12 +13,12 @@ public class RoomEnemiesManager : MonoBehaviour
         }
     }
 
-    public void AddEnemyToRoom(EnemyController enemyToAdd)
+    public void AddEnemyToRoom(EnemyMovement enemyToAdd)
     {
         enemiesInRoom.Add(enemyToAdd);
     }
 
-    public void RemoveEnemyFromRoom(EnemyController enemyToRemove)
+    public void RemoveEnemyFromRoom(EnemyMovement enemyToRemove)
     {
         enemiesInRoom.Remove(enemyToRemove);
     }
