@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
     
     [Header("Settings")]
     [SerializeField] private Vector3[] _lineMovePoints;
+
+    private PlayerController _playerController;
     
     private int _lineMovePointIndex = 1;
     public bool _spottedPlayer;
@@ -29,28 +31,37 @@ public class EnemyController : MonoBehaviour
     #region monobehaviour
     private void Awake()
     {
+        _playerController = FindObjectOfType<PlayerController>();
         movement = GetComponent<Rigidbody2DMovement>();
         eyes.OnFindTargetUpdate += OnFindTargetUpdate;
     }
     
     private void Update()
     {
-        if (_spottedPlayer)
-            return;
-        
-        movement.SetDirection(transform.right);
-
-        LookAt(_lineMovePoints[_lineMovePointIndex]);
-        
-        // transform.position = Vector2.Lerp(_startPos, target, _t);
-        var dst = Vector2.Distance(transform.position, _lineMovePoints[_lineMovePointIndex]);
-
-        if (dst <= 0.1f)
+        if (_enemyMode == EnemyMode.LineMove)
         {
-            _lineMovePointIndex++;
+            if (_spottedPlayer)
+                return;
+        
+            movement.SetDirection(transform.right);
 
-            if (_lineMovePointIndex >= 2)
-                _lineMovePointIndex = 0;
+            LookAt(_lineMovePoints[_lineMovePointIndex]);
+        
+            var dst = Vector2.Distance(transform.position, _lineMovePoints[_lineMovePointIndex]);
+
+            if (dst <= 0.1f)
+            {
+                _lineMovePointIndex++;
+
+                if (_lineMovePointIndex >= 2)
+                    _lineMovePointIndex = 0;
+            }
+        }
+        else if (_enemyMode == EnemyMode.FreeMove)
+        {
+            // only if player is in the room
+            LookAt(_playerController.transform.position);
+            movement.SetDirection(transform.right);
         }
     }
 

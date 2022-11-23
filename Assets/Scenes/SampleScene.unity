@@ -1131,9 +1131,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 613942739, guid: a8aa67bc3e3d5954198525f5bcf64ad7, type: 3}
+      propertyPath: _enemyMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 613942744, guid: a8aa67bc3e3d5954198525f5bcf64ad7, type: 3}
       propertyPath: speed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3939420087440083589, guid: a8aa67bc3e3d5954198525f5bcf64ad7, type: 3}
       propertyPath: m_Radius

@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84992e9856104252b75dcee8a0e55dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyMode: 0
+  _enemyMode: 2
   eyes: {fileID: 3939420087440083590}
   movement: {fileID: 613942744}
   _lineMovePoints:
@@ -175,4 +175,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e8c91d838e495398a739916ad2c454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1
