@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ObstacleTest : LightInteractable
 {
-    public override void Interact(ColorType color)
+    public override void InteractStart(ColorType color)
     {
         Debug.Log("Obstacle");
         this.color = color;

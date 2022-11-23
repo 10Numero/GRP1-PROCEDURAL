@@ -13,7 +13,16 @@ public class LightDetection : MonoBehaviour
         var intractable = other.gameObject.GetComponent<LightInteractable>();
         if (intractable && intractable.room == playerController.room)
         {
-            intractable.Interact(playerLight.Light);
+            intractable.InteractStart(playerLight.Light);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        var intractable = other.gameObject.GetComponent<LightInteractable>();
+        if (intractable && intractable.room == playerController.room)
+        {
+            intractable.InteractEnd(playerLight.Light);
         }
     }
 }
