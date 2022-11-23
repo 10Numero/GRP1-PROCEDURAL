@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Floor Gradient
-  m_Shader: {fileID: -6465566751694194690, guid: c51661f44367ffa4dabb0754f7c970bf, type: 3}
+  m_Name: Player
+  m_Shader: {fileID: -6465566751694194690, guid: d78c90d3dbaea8c47a43c8411118f4ba, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -34,19 +34,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Black_Force_WAKANDA: 1
-    - _Cell_Density: 1.14
-    - _Cell_Noise_Speed: 3
-    - _Gradient_Force: 0.03
-    - _HDR: 60
-    - _Line_Width: 0.9
-    - _Random_Hue: 166.9
-    - _Seed: 17
-    - _Tiling_Normal_Alpha: 0.3
-    - _Voronoi_Speed: 0.3
-    - _White_Force: 0.4
+    - _Noise_Force: 0.25
+    - _Noise_Speed: 5
+    - _Outline_Width: 0.1
+    - _Player_Noise_Speed: 5
     m_Colors:
-    - _Line_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _Noise_Tiling: {r: 3, g: 3, b: 0, a: 0}
-    - _Tiling: {r: 9, g: 6, b: 0, a: 0}
+    - _Color: {r: 0.2784314, g: 0.6784314, b: 0.38431373, a: 1}
+    - _Out_Outline_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Outline_Color: {r: 10.557402, g: 25.524857, b: 14.299265, a: 1}
   m_BuildTextureStacks: []
