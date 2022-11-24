@@ -5,9 +5,10 @@ public class Node : MonoBehaviour
 {
     [SerializeField] private GameObject _nodePrefab;
     [SerializeField] private int _nodeNb;
-    [SerializeField] Dictionary<int, Node> _sideNodes = new Dictionary<int, Node>();
+    [SerializeField] public Dictionary<int, Node> _sideNodes = new Dictionary<int, Node>();
     [SerializeField] public Vector2 _nodePos;
-
+    [SerializeField] public bool _mustBeEmpty = false;
+    [SerializeField] public int _distanceFromStartRoom = 0;
     private void Awake()
     {
         _sideNodes.Add(0, null);
@@ -40,6 +41,17 @@ public class Node : MonoBehaviour
         return true;
     }
 
+    public void setDistance()
+    {
+        int minDistance = -1;
+        for(int i = 0; i<4; i++)
+        {
+            if (_sideNodes[i] is not null && (minDistance < 0 || minDistance > _sideNodes[i]._distanceFromStartRoom))
+                minDistance = _sideNodes[i]._distanceFromStartRoom + 1;
+        }
+        _distanceFromStartRoom = minDistance;
+    }
+
     public bool setNode(int index, Node node)
     {
         if (_sideNodes[index] is not null) return false;
@@ -59,9 +71,9 @@ public class Node : MonoBehaviour
     }
     public void DisplayNode()
     {
-        for(int i = 0; i< 3; i++)
+        for(int i = 0; i< 4; i++)
         {
-            if (_sideNodes[i] is not null) Debug.Log("La node " + gameObject.name + " a comme voisin sur la " + i + " la node " + _sideNodes[i].name);
+            if (_sideNodes[i] is not null) Debug.Log("La node " + _nodePos + " a comme voisin sur la " + i + " la node " + _sideNodes[i]._nodePos);
         }
     }
 

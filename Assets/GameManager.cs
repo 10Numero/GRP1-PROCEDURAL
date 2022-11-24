@@ -12,5 +12,6 @@ public class GameManager : MonoBehaviour
     {
         _graphManager.GenerateGraph();
         _layoutManager.CreateLayoutFromGraph(_graphManager);
+        _layoutManager.SpawnSecretRoom(_graphManager);
     }
 }

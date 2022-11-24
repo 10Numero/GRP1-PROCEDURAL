@@ -7,8 +7,7 @@ public class LayoutManager : MonoBehaviour
     [SerializeField] private Room _baseRoom;
     [SerializeField] private GameObject _grid;
     [SerializeField] private Dictionary<Vector2, Room> _roomsCreated = new Dictionary<Vector2, Room>();
-    [SerializeField] private List<Vector3> _relativePositionsFromIndex = new List<Vector3>();
-    [SerializeField] private int[,] _roomsMatrix;
+    [SerializeField] private List<Vector2> _relativePositionsFromIndex = new List<Vector2>();
 
     private void Awake()
     {
@@ -21,7 +20,6 @@ public class LayoutManager : MonoBehaviour
     {
         List<Node> nodesList = graph.getnodes();
         CreateRoomFromNode(nodesList[0], new Vector2(0, 0));
-        _roomsMatrix = new int[graph.getnodes().Count, graph.getnodes().Count];
     }
 
     public void CreateRoomFromNode(Node node, Vector2 position)
@@ -34,12 +32,12 @@ public class LayoutManager : MonoBehaviour
         {
             if(sideNodes[i] != null)
             {
-                if (!_roomsCreated.ContainsKey(newRoom.transform.position + _relativePositionsFromIndex[i])) CreateRoomFromNode(sideNodes[i], newRoom.transform.position + _relativePositionsFromIndex[i]);
+                if (!_roomsCreated.ContainsKey((Vector2) newRoom.transform.position + _relativePositionsFromIndex[i])) CreateRoomFromNode(sideNodes[i], (Vector2) newRoom.transform.position + _relativePositionsFromIndex[i]);
             }
         }
     }
 
-    public void SpawnSceretRoom(CreateGraph graph)
+    public void SpawnSecretRoom(CreateGraph graph)
     {
         bool isPlaced = false;
         while(!isPlaced)
@@ -49,9 +47,23 @@ public class LayoutManager : MonoBehaviour
             {
                 if(sideNode.getSideNodes()[i] is null)
                 {
+                    Debug.Log(sideNode.getSideNodes()[i]);
                     for(int j = 0; j<4; j++)
                     {
+                        Vector2 otherSideRoom = sideNode._nodePos + _relativePositionsFromIndex[i] + _relativePositionsFromIndex[j];
+                        if (_roomsCreated.ContainsKey(otherSideRoom) && otherSideRoom != sideNode._nodePos)
+                        {
+                            Debug.Log(sideNode._nodePos);
+                            Debug.Log(sideNode._nodePos + _relativePositionsFromIndex[i]);
+                            Debug.Log(otherSideRoom);
+                            Room secretRoom = Instantiate(_baseRoom, sideNode._nodePos + _relativePositionsFromIndex[i], Quaternion.identity, _grid.transform);
+                            _roomsCreated.Add(secretRoom.transform.position, secretRoom);
+                            isPlaced = true;
+                            secretRoom.name = "Secret Room";
+                            break;
+                        }
                     }
+                    break;
                 }
             }
         }
