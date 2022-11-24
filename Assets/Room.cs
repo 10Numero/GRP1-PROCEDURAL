@@ -5,6 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     Dictionary<int, Room> _sideRooms = new Dictionary<int, Room>();
+    public Dictionary<Room, int> _roomsPaths = new Dictionary<Room, int>();
 
     private void Awake()
     {

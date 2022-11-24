@@ -6,6 +6,7 @@ public class Node : MonoBehaviour
     [SerializeField] private GameObject _nodePrefab;
     [SerializeField] private int _nodeNb;
     [SerializeField] Dictionary<int, Node> _sideNodes = new Dictionary<int, Node>();
+    [SerializeField] public Vector2 _nodePos;
 
     private void Awake()
     {

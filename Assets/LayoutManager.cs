@@ -8,6 +8,7 @@ public class LayoutManager : MonoBehaviour
     [SerializeField] private GameObject _grid;
     [SerializeField] private Dictionary<Vector2, Room> _roomsCreated = new Dictionary<Vector2, Room>();
     [SerializeField] private List<Vector3> _relativePositionsFromIndex = new List<Vector3>();
+    [SerializeField] private int[,] _roomsMatrix;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class LayoutManager : MonoBehaviour
     {
         List<Node> nodesList = graph.getnodes();
         CreateRoomFromNode(nodesList[0], new Vector2(0, 0));
+        _roomsMatrix = new int[graph.getnodes().Count, graph.getnodes().Count];
     }
 
     public void CreateRoomFromNode(Node node, Vector2 position)
@@ -33,6 +35,24 @@ public class LayoutManager : MonoBehaviour
             if(sideNodes[i] != null)
             {
                 if (!_roomsCreated.ContainsKey(newRoom.transform.position + _relativePositionsFromIndex[i])) CreateRoomFromNode(sideNodes[i], newRoom.transform.position + _relativePositionsFromIndex[i]);
+            }
+        }
+    }
+
+    public void SpawnSceretRoom(CreateGraph graph)
+    {
+        bool isPlaced = false;
+        while(!isPlaced)
+        {
+            Node sideNode = graph.getnodes()[Random.Range(1, graph.getnodes().Count)];
+            for(int i = 0; i<4; i++)
+            {
+                if(sideNode.getSideNodes()[i] is null)
+                {
+                    for(int j = 0; j<4; j++)
+                    {
+                    }
+                }
             }
         }
     }
