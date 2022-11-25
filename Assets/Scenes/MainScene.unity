@@ -559,6 +559,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f24f05bb063c34c97291c18648bd7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  green: {r: 0, g: 1, b: 0, a: 0.34901962}
+  blue: {r: 0, g: 0, b: 1, a: 0.34901962}
+  red: {r: 1, g: 0, b: 0, a: 0.34901962}
   enemyPrefabs:
   - {fileID: 2362871572417505329, guid: 6129c6f8a3ebd184084aa287cd2be512, type: 3}
   - {fileID: 748925014919273790, guid: afc504277c970114282f58de357c97d0, type: 3}

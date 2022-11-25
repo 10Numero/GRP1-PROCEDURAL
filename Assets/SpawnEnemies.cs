@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour
 {
+    public Color green;
+    public Color blue;
+    public Color red;
     public List<EnemyHealth> enemyPrefabs;
     [SerializeField] List<Color> colors = new List<Color>();
     public void Spawn(CreateGraph _graph)
     {
-        colors.Add(Color.green);
-        colors.Add(Color.blue);
-        colors.Add(Color.red);
+        colors.Add(green);
+        colors.Add(blue);
+        colors.Add(red);
         for(int i = 1;i<_graph.getnodes().Count/3; i++)
         {
             int nbOfEnemies = Random.Range(1, 4);
@@ -20,7 +23,7 @@ public class SpawnEnemies : MonoBehaviour
                 _graph.getnodes()[i].room.enemies.Add(enemy);
                 enemy.room = i;
                 enemy.color = ColorType.Green;
-                enemy.GetComponent<SpriteRenderer>().color = Color.green;
+                enemy.GetComponent<SpriteRenderer>().color = colors[0];
                 enemy.GetComponent<EnemyMovement>()._lineMovePoints.Add(enemy.transform.position);
                 enemy.GetComponent<EnemyMovement>()._lineMovePoints.Add(new Vector2(_graph.getnodes()[i]._nodePos.x + Random.Range(-8, 8), _graph.getnodes()[i]._nodePos.y + Random.Range(-3, 3)));
             }
