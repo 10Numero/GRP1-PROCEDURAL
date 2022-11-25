@@ -14,8 +14,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 PointerPosition { get; set; }
 
 
+    private static PlayerController _instance;
+    public static PlayerController Instance => _instance;
     private void Awake()
     {
+        _instance = this;
+
         life = GetComponent<Life>();
         movement = GetComponent<Rigidbody2DMovement>();
     }

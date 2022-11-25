@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] LayoutManager _layoutManager;
     [SerializeField] ReceptorsManager _receptorsManager;
     [SerializeField] ChestSpawner _chestManager;
+    [SerializeField] SpikeManager _spikeManager;
 
     public void Start()
     {
@@ -19,5 +20,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         _chestManager.CreateChests(_graphManager);
+        _spikeManager.Spawn(_graphManager);
     }
 }

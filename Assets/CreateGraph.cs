@@ -14,7 +14,15 @@ public class CreateGraph : MonoBehaviour
     public Node _finalNode;
     public int _distanceFromStartToFinish = 0;
 
-
+    int c = 0;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _nodesList[c].room.Unlock();
+            c++;
+        }
+    }
 
     public void GenerateGraph()
     {

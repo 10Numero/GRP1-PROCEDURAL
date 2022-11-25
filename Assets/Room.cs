@@ -15,6 +15,13 @@ public class Room : MonoBehaviour
     public List<GameObject> secretDoors = new List<GameObject>();
     public List<GameObject> secretMasks = new List<GameObject>();
 
+    [HideInInspector] public int roomNb = -1;
+
+    public void OnEnterRoom()
+    {
+        PlayerController.Instance.room = roomNb;
+    }
+
     private void Awake()
     {
         _sideRooms.Add(0, null);

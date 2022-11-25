@@ -11,12 +11,14 @@ public class LayoutManager : MonoBehaviour
     public void CreateLayoutFromGraph(CreateGraph graph)
     {
         Room secretRoom = Instantiate(_baseRoom, graph._secretNode._nodePos, Quaternion.identity, _grid.transform);
+        secretRoom.roomNb = -1;
         secretRoom.gameObject.name = "Secret Room";
         graph._secretNode.room = secretRoom;
         for (int i = 0; i < graph.getnodes().Count; i++)
         {
             Node node = graph.getnodes()[i];
             Room room = Instantiate(_baseRoom, node._nodePos, Quaternion.identity, _grid.transform);
+            room.roomNb = i;
             room.gameObject.name = "Base Room " + i;
             node.room = room;
             _roomsCreated.Add(room);

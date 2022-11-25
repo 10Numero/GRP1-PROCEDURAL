@@ -547,7 +547,7 @@ MonoBehaviour:
   red: {r: 1, g: 0, b: 0, a: 0.2509804}
   green: {r: 0, g: 1, b: 0, a: 0.2509804}
   blue: {r: 0, g: 0, b: 1, a: 0.2509804}
-  enableMask: 0
+  enableMask: 1
 --- !u!114 &1402205489
 MonoBehaviour:
   m_ObjectHideFlags: 0
