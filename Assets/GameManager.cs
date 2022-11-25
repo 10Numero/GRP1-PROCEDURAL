@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] CreateGraph _graphManager;
     [SerializeField] LayoutManager _layoutManager;
     [SerializeField] ReceptorsManager _receptorsManager;
+    [SerializeField] ChestSpawner _chestManager;
 
     public void Start()
     {
         _graphManager.GenerateGraph();
         _layoutManager.CreateLayoutFromGraph(_graphManager);
-        if(!_receptorsManager.CreateReceptors(_graphManager))
+        if (!_receptorsManager.CreateReceptors(_graphManager))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        _chestManager.CreateChests(_graphManager);
     }
 }

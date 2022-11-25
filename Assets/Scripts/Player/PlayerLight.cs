@@ -52,8 +52,12 @@ public class PlayerLight : MonoBehaviour
 
     private bool isActive;
 
+    private static PlayerLight _instance;
+    public static PlayerLight Instance => _instance;
     private void Awake()
     {
+        _instance = this;
+
 #if UNITY_EDITOR
         if (enableMask)
 #endif

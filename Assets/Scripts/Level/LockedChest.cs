@@ -38,6 +38,7 @@ public class LockedChest : MonoBehaviour
 
     private void Open(Pickup usedKey)
     {
+        PlayerLight.Instance.AddNextColor();
         Destroy(usedKey.gameObject);
         Disappear();
 
