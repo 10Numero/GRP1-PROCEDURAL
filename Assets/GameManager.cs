@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ReceptorsManager _receptorsManager;
     [SerializeField] ChestSpawner _chestManager;
     [SerializeField] SpikeManager _spikeManager;
+    [SerializeField] SpawnEnemies _enemiesSpawner;
 
     public void Start()
     {
@@ -21,5 +22,6 @@ public class GameManager : MonoBehaviour
         }
         _chestManager.CreateChests(_graphManager);
         _spikeManager.Spawn(_graphManager);
+        _enemiesSpawner.Spawn(_graphManager);
     }
 }

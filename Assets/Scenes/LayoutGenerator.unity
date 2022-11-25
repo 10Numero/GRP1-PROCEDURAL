@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spikePrefab: {fileID: 8252894214567658535, guid: f10a27f798fe0054fb595bf762b525f0, type: 3}
+  minProbability: 0.25
 --- !u!4 &600978285
 Transform:
   m_ObjectHideFlags: 0
@@ -529,6 +530,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4c5583d9d74fb4a21a8f26e8f44a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1544371042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1544371044}
+  - component: {fileID: 1544371043}
+  m_Layer: 0
+  m_Name: EnemiesSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1544371043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544371042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f24f05bb063c34c97291c18648bd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefabs:
+  - {fileID: 3939420087440083593, guid: 9683860e4e4697248bc5abff44c36218, type: 3}
+  - {fileID: 3939420087440083593, guid: 6129c6f8a3ebd184084aa287cd2be512, type: 3}
+  - {fileID: 3939420087440083593, guid: afc504277c970114282f58de357c97d0, type: 3}
+  colors: []
+--- !u!4 &1544371044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544371042}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.33551118, y: 0.6626649, z: -0.010592326}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613678694
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +658,7 @@ MonoBehaviour:
   _receptorsManager: {fileID: 1613678695}
   _chestManager: {fileID: 806108935}
   _spikeManager: {fileID: 600978284}
+  _enemiesSpawner: {fileID: 1544371043}
 --- !u!4 &1693890748
 Transform:
   m_ObjectHideFlags: 0

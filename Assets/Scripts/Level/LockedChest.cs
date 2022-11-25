@@ -6,7 +6,7 @@ public class LockedChest : MonoBehaviour
 {
     public float disappearTime;
     //public GameObject openDoor;
-
+    bool isCollected = false;
     public KeyController specifiedKey;
 
     //private LockedChest connectedLockedChest;
@@ -38,10 +38,13 @@ public class LockedChest : MonoBehaviour
 
     private void Open(Pickup usedKey)
     {
-        PlayerLight.Instance.AddNextColor();
-        Destroy(usedKey.gameObject);
-        Disappear();
-
+        if (!isCollected)
+        {
+            PlayerLight.Instance.AddNextColor();
+            isCollected = true;
+            Destroy(usedKey.gameObject);
+            Disappear();
+        }
         //if (connectedLockedDoor == null)
         //    return;
 
@@ -69,6 +72,7 @@ public class LockedChest : MonoBehaviour
                 yield return null;
             }
 
+            
             Destroy(gameObject);
         }
     }
