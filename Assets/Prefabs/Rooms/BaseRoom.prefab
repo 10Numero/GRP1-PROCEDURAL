@@ -565,6 +565,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacent: {fileID: 0}
+  adjacentMask: {fileID: 0}
+  mask: {fileID: 0}
 --- !u!1 &1325537657080039918
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +766,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacent: {fileID: 0}
+  adjacentMask: {fileID: 0}
+  mask: {fileID: 0}
 --- !u!1 &3007640243422751005
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,7 +924,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3475515730257596945}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -4638,6 +4642,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacent: {fileID: 0}
+  adjacentMask: {fileID: 0}
+  mask: {fileID: 0}
 --- !u!1 &4004598393317875393
 GameObject:
   m_ObjectHideFlags: 0
@@ -5101,6 +5107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacent: {fileID: 0}
+  adjacentMask: {fileID: 0}
+  mask: {fileID: 0}
 --- !u!1 &5714834705858009469
 GameObject:
   m_ObjectHideFlags: 0
