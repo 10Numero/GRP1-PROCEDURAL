@@ -5,12 +5,57 @@ using UnityEngine;
 public class ReceptorsManager : MonoBehaviour
 {
 
+    [SerializeField] Receptor receptorPrefab;
+
+    [HideInInspector] Receptor receptor1;
+    [HideInInspector] Receptor receptor2;
+    [HideInInspector] Receptor receptor3;
+
     [HideInInspector] public Node node1;
     [HideInInspector] public Node node2;
     [HideInInspector] public Node node3;
 
+    CreateGraph graph;
+
+    private int m_active = 0;
+    public int active 
+    {
+        get => m_active;
+        set
+        {
+            m_active = value;
+            ActivatedReceptor();
+        }
+    }
+
+    private static ReceptorsManager _instance;
+    public static ReceptorsManager Instance => _instance;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
+    void ActivatedReceptor()
+    {
+        if (m_active < 3)
+        {
+            return;
+        }
+
+        foreach (var door in graph._secretNode.room.secretDoors)
+        {
+            door.GetComponent<Collider2D>().enabled = false;
+        }
+        foreach (var mask in graph._secretNode.room.secretMasks)
+        {
+            mask.SetActive(true);
+        }
+    }
+
     public bool CreateReceptors(CreateGraph graph)
     {
+        this.graph = graph;
         List<Node> potentialNodes = new List<Node>();
 
         Vector2 up = graph._secretNode._nodePos + graph._relativePositionsFromIndex[0];
@@ -75,6 +120,15 @@ public class ReceptorsManager : MonoBehaviour
         
         node3 = potentialNodes[Random.Range(0, potentialNodes.Count)];
         potentialNodes.Remove(node3);
+
+        receptor1 = Instantiate(receptorPrefab, node1._nodePos + new Vector2(Random.Range(-9, 9), Random.Range(-4, 4)), Quaternion.identity);
+        receptor1.room = graph.getnodes().IndexOf(node1);
+
+        receptor2 = Instantiate(receptorPrefab, node2._nodePos + new Vector2(Random.Range(-9, 9), Random.Range(-4, 4)), Quaternion.identity);
+        receptor2.room = graph.getnodes().IndexOf(node2);
+
+        receptor3 = Instantiate(receptorPrefab, node3._nodePos + new Vector2(Random.Range(-9, 9), Random.Range(-4, 4)), Quaternion.identity);
+        receptor3.room = graph.getnodes().IndexOf(node3);
 
         return true;
     }

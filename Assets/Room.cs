@@ -9,7 +9,12 @@ public class Room : MonoBehaviour
     public Dictionary<Room, int> _roomsPaths = new Dictionary<Room, int>();
     public List<GameObject> _doorBlocks = new List<GameObject>();
     public List<Door> _unlockableDoors = new List<Door>();
+    public List<SpriteMask> doorMasks = new List<SpriteMask>();
     public Door door;
+
+    public List<GameObject> secretDoors = new List<GameObject>();
+    public List<GameObject> secretMasks = new List<GameObject>();
+
     private void Awake()
     {
         _sideRooms.Add(0, null);

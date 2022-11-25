@@ -16,10 +16,6 @@ public class CreateGraph : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("space")) DisplayGraph();
-    }
     public void GenerateGraph()
     {
         
@@ -126,14 +122,6 @@ public class CreateGraph : MonoBehaviour
                 }
             }
             adjacentRooms--;
-        }
-    }
-
-    public void DisplayGraph()
-    {
-        for (int i = 0; i < _nodesList.Count; i++)
-        {
-            _nodesList[i].DisplayNode();
         }
     }
 

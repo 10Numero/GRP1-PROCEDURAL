@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody2D))]
-public class Spikes : LightInteractable
+public class Receptor : LightInteractable
 {
     [Header("Dependencies")]
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -14,6 +13,8 @@ public class Spikes : LightInteractable
     [SerializeField] Color _blue = Color.blue;
     [SerializeField] Color _red = Color.red;
 
+    bool active = false;
+
     private void Awake()
     {
         spriteRenderer.color = _default;
@@ -22,6 +23,11 @@ public class Spikes : LightInteractable
     public override void InteractStart(ColorType color)
     {
         this.color = color;
+
+        if (!active)
+        {
+            ReceptorsManager.Instance.active = ReceptorsManager.Instance.active + 1;
+        }
 
         switch (this.color)
         {
@@ -38,16 +44,11 @@ public class Spikes : LightInteractable
                 spriteRenderer.color = _default;
                 break;
         }
+
+        active = true;
     }
+
     public override void InteractEnd(ColorType color) { }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-        if (enemyHealth && enemyHealth.color == color)
-        {
-            // Apply Damage to Enemy
-        }
-    }
 
 }

@@ -31,22 +31,4 @@ public class Node
         return true;
     }
 
-    public Node getNode(int index)
-    {
-        return _sideNodes[index];
-    }
-
-
-    public Dictionary<int, Node> getSideNodes()
-    {
-        return _sideNodes;
-    }
-    public void DisplayNode()
-    {
-        for(int i = 0; i< 4; i++)
-        {
-            if (_sideNodes[i] is not null) Debug.Log("La node " + _nodePos + " a comme voisin sur la " + i + " la node " + _sideNodes[i]._nodePos);
-        }
-    }
-
 }
