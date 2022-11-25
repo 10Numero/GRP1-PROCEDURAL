@@ -24,7 +24,7 @@ public class CreateGraph : MonoBehaviour
         }
     }
 
-    public void GenerateGraph()
+    public bool GenerateGraph()
     {
         
         
@@ -82,50 +82,68 @@ public class CreateGraph : MonoBehaviour
         }
 
         int adjacentRooms = 3;
-        while(_secretNode is null)
+        List<int> indices = GetIndicesList();
+        while (_secretNode is null)
         {
-            bool spawned = false;
-            for(int i = 0; i<_nodesList.Count; i++)
+            if (adjacentRooms < 1)
             {
-                for (int j = 0; j < 4; j++)
+                return false;
+            }
+
+            int index = indices[Random.Range(0, indices.Count)];
+            indices.Remove(index);
+
+            for (int j = 0; j < 4; j++)
+            {
+                Vector2 sidePos = _nodesList[index]._nodePos + _relativePositionsFromIndex[j];
+                if (!positions.ContainsKey(sidePos))
                 {
-                    Vector2 sidePos = _nodesList[i]._nodePos + _relativePositionsFromIndex[j];
-                    if (!positions.ContainsKey(sidePos))
+                    int adjacents = 0;
+                    List<Node> adjacentNodes = new List<Node>();
+                    for(int k = 0; k<4; k++)
                     {
-                        int adjacents = 0;
-                        List<Node> adjacentNodes = new List<Node>();
-                        for(int k = 0; k<4; k++)
+                        Vector2 pos = sidePos + _relativePositionsFromIndex[k];
+                        if (positions.ContainsKey(pos))
                         {
-                            Vector2 pos = sidePos + _relativePositionsFromIndex[k];
-                            if (positions.ContainsKey(pos))
-                            {
-                                adjacents++;
+                            adjacents++;
 
-                                adjacentNodes.Add(positions[pos]);
-                            }
-                        }
-                        if (adjacents == adjacentRooms)
-                        {
-                            _secretNode = new Node();
-                            _secretNode._nodePos = sidePos;
-                            positions.Add(_secretNode._nodePos, _secretNode);
-                            Node adjacentNode = adjacentNodes[Random.Range(0, adjacentNodes.Count)];
-                            int dir = _relativePositionsFromIndex.IndexOf(adjacentNode._nodePos - _secretNode._nodePos);
-                            _secretNode.setNode(dir, adjacentNode);
-                            adjacentNode.setNode((dir + 2) % 4, _secretNode); 
-
-                            spawned = true;
-                            break;
+                            adjacentNodes.Add(positions[pos]);
                         }
                     }
-                }
-                if(spawned)
-                {
-                    break;
+                    if (adjacents == adjacentRooms)
+                    {
+                        _secretNode = new Node();
+                        _secretNode._nodePos = sidePos;
+                        positions.Add(_secretNode._nodePos, _secretNode);
+                        Node adjacentNode = adjacentNodes[Random.Range(0, adjacentNodes.Count)];
+                        int dir = _relativePositionsFromIndex.IndexOf(adjacentNode._nodePos - _secretNode._nodePos);
+                        _secretNode.setNode(dir, adjacentNode);
+                        adjacentNode.setNode((dir + 2) % 4, _secretNode); 
+
+                        break;
+                    }
                 }
             }
-            adjacentRooms--;
+
+            if (indices.Count == 0)
+            {
+                indices = GetIndicesList();
+                adjacentRooms--;
+            }
         }
+
+        return true;
+    }
+
+    List<int> GetIndicesList()
+    {
+        List<int> indices = new List<int>();
+        for (int i = 0; i < _nodesList.Count; ++i)
+        {
+            indices.Add(i);
+        }
+
+        return indices;
     }
 
     public List<Node> getnodes()

@@ -14,14 +14,24 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        _graphManager.GenerateGraph();
+
+        if (!_graphManager.GenerateGraph())
+        {
+            SceneManager.LoadScene(0);
+        }
+
         _layoutManager.CreateLayoutFromGraph(_graphManager);
+
         if (!_receptorsManager.CreateReceptors(_graphManager))
         {
             SceneManager.LoadScene(0);
         }
+
         _chestManager.CreateChests(_graphManager);
+
         _spikeManager.Spawn(_graphManager);
+
         _enemiesSpawner.Spawn(_graphManager);
+
     }
 }
