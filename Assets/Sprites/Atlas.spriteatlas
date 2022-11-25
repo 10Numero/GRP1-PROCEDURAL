@@ -53,6 +53,7 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: cf315a12087b67c4dab44aecb3d72b9d, type: 3}
   - {fileID: 21300000, guid: f3ef024444d630c48a84217d21dccdbc, type: 3}
+  - {fileID: 21300000, guid: 1a97d4868ee939148a3b458cbdb7c435, type: 3}
   - {fileID: 21300000, guid: ee19420753b5c4a43a4a6c94c54bb726, type: 3}
   - {fileID: 21300000, guid: 90c78198dd4fdbe478b1ad05b1d4ebb8, type: 3}
   - {fileID: 877609874, guid: f0361519cb1e22347a4a01a025eb231a, type: 3}
@@ -68,6 +69,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - Heart
   - PlaceHolder
+  - Spike
   - treasure-chest_5233099
   - RoomMask
   - props_0
