@@ -24,7 +24,7 @@ public class EnemyHealth : LightInteractable
     }
     #endregion
 
-    private void ApplyDamage()
+    public void ApplyDamage()
     {
         currentHealth--;
         

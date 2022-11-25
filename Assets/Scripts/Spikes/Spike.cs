@@ -46,7 +46,7 @@ public class Spike : LightInteractable
         EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
         if (enemyHealth && enemyHealth.color == color)
         {
-            // Apply Damage to Enemy
+            enemyHealth.ApplyDamage();
         }
     }
 
