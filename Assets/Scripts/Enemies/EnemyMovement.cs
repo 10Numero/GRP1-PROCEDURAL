@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyEyes))]
@@ -18,11 +19,9 @@ public class EnemyMovement : MonoBehaviour
     [Header("Components")]
     [SerializeField] private EnemyEyes eyes;
     [SerializeField] private Rigidbody2DMovement movement;
+    [SerializeField] private EnemyHealth health;
     
-    [Header("Settings")]
-    [SerializeField] private Vector3[] _lineMovePoints;
-
-    private PlayerController _playerController;
+    [HideInInspector] public List<Vector3> _lineMovePoints = new List<Vector3>();
     
     private int _lineMovePointIndex = 1;
     public bool _spottedPlayer;
@@ -31,7 +30,6 @@ public class EnemyMovement : MonoBehaviour
     #region monobehaviour
     private void Awake()
     {
-        _playerController = FindObjectOfType<PlayerController>();
         movement = GetComponent<Rigidbody2DMovement>();
         eyes.OnFindTargetUpdate += OnFindTargetUpdate;
     }
@@ -59,8 +57,13 @@ public class EnemyMovement : MonoBehaviour
         }
         else if (_enemyMode == EnemyMode.FreeMoveCarre)
         {
-            // only if player is in the room
-            LookAt(_playerController.transform.position);
+            if (health.room != PlayerController.Instance.room)
+            {
+                movement.SetDirection(Vector2.zero);
+                return;
+            }
+
+            LookAt(PlayerController.Instance.transform.position);
             movement.SetDirection(transform.right);
         }
     }
@@ -83,6 +86,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnFindTargetUpdate(Transform obj)
     {
+        if (_enemyMode != EnemyMode.FreeMoveCarre || health.room != PlayerController.Instance.room)
+        {
+            movement.SetDirection(Vector2.zero);
+            return;
+        }
+
         // see player
         if (obj != null)
         {

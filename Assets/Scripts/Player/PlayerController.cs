@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnPointer(InputAction.CallbackContext input)
     {
+        if (!Camera.main)
+        {
+            return;
+        }
         Vector3 mousePos = input.action.ReadValue<Vector2>();
         mousePos.z = Camera.main.nearClipPlane;
         PointerPosition = Camera.main.ScreenToWorldPoint(mousePos);

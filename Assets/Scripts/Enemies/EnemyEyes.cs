@@ -59,7 +59,6 @@ public class EnemyEyes : MonoBehaviour
         if (Vector3.Distance(transform.position, other.transform.position) < viewRadius + PLAYER_RADIUS / 2)
         {
             OnFindTargetUpdate?.Invoke(other.transform);
-            Debug.Log("I see < " + other.name + " >");
         }
         else
         {

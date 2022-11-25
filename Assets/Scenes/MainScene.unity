@@ -560,9 +560,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 3939420087440083593, guid: 9683860e4e4697248bc5abff44c36218, type: 3}
-  - {fileID: 3939420087440083593, guid: 6129c6f8a3ebd184084aa287cd2be512, type: 3}
-  - {fileID: 3939420087440083593, guid: afc504277c970114282f58de357c97d0, type: 3}
+  - {fileID: 2362871572417505329, guid: 6129c6f8a3ebd184084aa287cd2be512, type: 3}
+  - {fileID: 748925014919273790, guid: afc504277c970114282f58de357c97d0, type: 3}
+  - {fileID: -8167472861341604587, guid: 9683860e4e4697248bc5abff44c36218, type: 3}
   colors: []
 --- !u!4 &1544371044
 Transform:
@@ -577,7 +577,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613678694
 GameObject:
@@ -683,7 +683,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4570305563332787, guid: 5218b1326248c8c4b93b5d5335035873, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4570305563332787, guid: 5218b1326248c8c4b93b5d5335035873, type: 3}
       propertyPath: m_LocalPosition.x

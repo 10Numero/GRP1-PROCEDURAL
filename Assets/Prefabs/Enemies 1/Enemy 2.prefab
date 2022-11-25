@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 613942745}
   - component: {fileID: 613942739}
   - component: {fileID: 613942744}
+  - component: {fileID: 748925014919273790}
+  - component: {fileID: 4040639296749289678}
   m_Layer: 8
   m_Name: Enemy 2
   m_TagString: Untagged
@@ -99,12 +101,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3.5
+  m_Radius: 0.45
 --- !u!114 &3939420087440083590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +161,7 @@ MonoBehaviour:
   _enemyMode: 0
   eyes: {fileID: 3939420087440083590}
   movement: {fileID: 613942744}
+  health: {fileID: 748925014919273790}
   _lineMovePoints:
   - {x: -6, y: 0, z: 0}
   - {x: 6, y: 0, z: 0}
@@ -176,3 +179,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!114 &748925014919273790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3939420087440083593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16a3a572aff262479bcb56bf39f3a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 1
+--- !u!114 &4040639296749289678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3939420087440083593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5157760b939f38f49b1ffda0d1d85da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

@@ -574,7 +574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInvincible: 0
-  startLife: 5
+  startLife: 1
   onDamageTaken:
     m_PersistentCalls:
       m_Calls:

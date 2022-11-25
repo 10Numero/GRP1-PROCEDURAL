@@ -10,6 +10,8 @@ public class LayoutManager : MonoBehaviour
 
     public void CreateLayoutFromGraph(CreateGraph graph)
     {
+        Room.FinishedAll = false;
+
         Room secretRoom = Instantiate(_baseRoom, graph._secretNode._nodePos, Quaternion.identity, _grid.transform);
         secretRoom.roomNb = -1;
         secretRoom.gameObject.name = "Secret Room";
@@ -61,5 +63,7 @@ public class LayoutManager : MonoBehaviour
                 secretRoom.secretMasks.Add(graph._secretNode.room.doorMasks[j].gameObject);
             }
         }
+
+        graph.getnodes()[0].room.Unlock();
     }
 }

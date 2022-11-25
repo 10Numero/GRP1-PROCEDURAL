@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         _layoutManager.CreateLayoutFromGraph(_graphManager);
         if (!_receptorsManager.CreateReceptors(_graphManager))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(0);
         }
         _chestManager.CreateChests(_graphManager);
         _spikeManager.Spawn(_graphManager);

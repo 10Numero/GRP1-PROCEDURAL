@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -5,19 +6,20 @@ using UnityEngine;
 
 public class EnemyHealth : LightInteractable
 {
-    [SerializeField, ReadOnly] private ColorType _colorType;
-    [SerializeField, ReadOnly] private int currentHealth;
+    public static Action<EnemyHealth> OnEnemyDeath;
+
+    [SerializeField] private int currentHealth = 1;
     
     #region light interactable
     public override void InteractStart(ColorType __color)
     {
-        if(_colorType == __color)
+        if(color == __color)
             InvokeRepeating(nameof(ApplyDamage), 0, 1);
     }
     
     public override void InteractEnd(ColorType __color)
     {
-        if(_colorType == __color)
+        if(color == __color)
             CancelInvoke(nameof(ApplyDamage));
     }
     #endregion
@@ -32,7 +34,7 @@ public class EnemyHealth : LightInteractable
     
     private void Death()
     {
-        // spawn particle on death ?
+        OnEnemyDeath?.Invoke(this);
         gameObject.SetActive(false);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Life : MonoBehaviour
 {
@@ -31,14 +32,15 @@ public class Life : MonoBehaviour
 
     private void Die()
     {
-        StartCoroutine(DieCoroutine());
-
-        IEnumerator DieCoroutine()
-        {
-            isAlive = false;
-            if (onDie != null)
-                yield return StartCoroutine(onDie);
-            Destroy(gameObject);
-        }
+        SceneManager.LoadScene(1);
+        //StartCoroutine(DieCoroutine());
+        //
+        //IEnumerator DieCoroutine()
+        //{
+        //    isAlive = false;
+        //    if (onDie != null)
+        //        yield return StartCoroutine(onDie);
+        //    Destroy(gameObject);
+        //}
     }
 }
