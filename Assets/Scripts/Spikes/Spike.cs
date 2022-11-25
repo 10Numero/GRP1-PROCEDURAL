@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody2D))]
-public class Spikes : LightInteractable
+[RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
+public class Spike : LightInteractable
 {
     [Header("Dependencies")]
     [SerializeField] SpriteRenderer spriteRenderer;
