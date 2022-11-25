@@ -84,11 +84,6 @@ public class CreateGraph : MonoBehaviour
         int adjacentRooms = 3;
         while(_secretNode is null)
         {
-            if(adjacentRooms <1)
-            {
-                //Retry all generation
-                break;
-            }
             bool spawned = false;
             for(int i = 0; i<_nodesList.Count; i++)
             {
