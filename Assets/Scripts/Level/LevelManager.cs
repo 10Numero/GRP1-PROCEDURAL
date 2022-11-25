@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
                 yield return new WaitForSeconds(cinemachineBrain.ActiveBlend.Duration);
             }
 
-            SetActiveRoom(newCam.VirtualCameraGameObject.GetComponentInParent<RoomController>());
+            SetActiveRoom(newCam.VirtualCameraGameObject.GetComponentInParent<Room>());
         }
     }
 
@@ -51,5 +51,10 @@ public class LevelManager : MonoBehaviour
             activeRoom.SetRoomActive(false);
         newActiveRoom.SetRoomActive(true);
         activeRoom = newActiveRoom;
+    }
+
+    private void SetActiveRoom(Room room)
+    {
+        room.OnEnterRoom();
     }
 }
