@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Node : MonoBehaviour
+public class Node
 {
-    [SerializeField] private GameObject _nodePrefab;
-    [SerializeField] private int _nodeNb;
-    [SerializeField] public Dictionary<int, Node> _sideNodes = new Dictionary<int, Node>();
-    [SerializeField] public Vector2 _nodePos;
-    [SerializeField] public bool _mustBeEmpty = false;
-    [SerializeField] public int _distanceFromStartRoom = 0;
-    private void Awake()
+    public Dictionary<int, Node> _sideNodes = new Dictionary<int, Node>();
+    public Vector2 _nodePos;
+    public bool _mustBeEmpty = false;
+    public int _distanceFromStartRoom = 0;
+    public Room room;
+
+    public Node ()
     {
         _sideNodes.Add(0, null);
         _sideNodes.Add(1, null);
@@ -17,44 +17,16 @@ public class Node : MonoBehaviour
         _sideNodes.Add(3, null);
     }
 
-    public bool setNode(int index)
+    public Node setNode(int index)
     {
-        if (_sideNodes[index] is not null) return false;
-        GameObject baseObject = Instantiate(_nodePrefab);
-        Node newNode = baseObject.GetComponent<Node>();
-        _sideNodes[index] = newNode;
-        switch(index)
-        {
-            case 0:
-                newNode.setNode(2, this);
-                break;
-            case 1:
-                newNode.setNode(3, this);
-                break;
-            case 2:
-                newNode.setNode(0, this);
-                break;
-            case 3:
-                newNode.setNode(1, this);
-                break;
-        }
-        return true;
-    }
-
-    public void setDistance()
-    {
-        int minDistance = -1;
-        for(int i = 0; i<4; i++)
-        {
-            if (_sideNodes[i] is not null && (minDistance < 0 || minDistance > _sideNodes[i]._distanceFromStartRoom))
-                minDistance = _sideNodes[i]._distanceFromStartRoom + 1;
-        }
-        _distanceFromStartRoom = minDistance;
+        Node baseNode = new Node();
+        _sideNodes[index] = baseNode;
+        baseNode.setNode((index +2)%4, this);
+        return baseNode;
     }
 
     public bool setNode(int index, Node node)
     {
-        if (_sideNodes[index] is not null) return false;
         _sideNodes[index] = node;
         return true;
     }

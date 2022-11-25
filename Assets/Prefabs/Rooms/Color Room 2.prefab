@@ -225,6 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f03b0977d9985645b6a7bae322538dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _doorBlocks: []
+  _unlockableDoors: []
+  door: {fileID: 0}
 --- !u!1 &3475515730765684161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,8 +3696,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7940553351439667206}
   m_LocalRotation: {x: -0, y: -0, z: 0.7075197, w: -0.70669365}
-  m_LocalPosition: {x: 6.3991, y: -1.4474, z: 0}
-  m_LocalScale: {x: 1.7937168, y: 6.1440835, z: 1}
+  m_LocalPosition: {x: 6.1746, y: -1.4265, z: 0}
+  m_LocalScale: {x: 1.7524613, y: 5.694951, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3475515730257596950}

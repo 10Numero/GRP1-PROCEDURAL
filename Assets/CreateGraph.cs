@@ -4,57 +4,129 @@ using UnityEngine;
 
 public class CreateGraph : MonoBehaviour
 {
-    [SerializeField] private GameObject _nodePrefab;
     [SerializeField] private int _numberOfNodes;
-    [SerializeField] private List<Node> _nodesList;
-    [SerializeField] private Dictionary<Vector2, Node> _nodesCreated = new Dictionary<Vector2, Node>();
-    [SerializeField] private List<Vector2>  _relativePositionsFromIndex = new List<Vector2>();
+    private List<Node> _nodesList = new List<Node>();
+    [HideInInspector] public List<Vector2>  _relativePositionsFromIndex = new List<Vector2>();
+    [HideInInspector] public Node _secretNode;
+    [HideInInspector] public Dictionary<Vector2, Node> positions = new Dictionary<Vector2, Node>();
+
 
     public Node _finalNode;
     public int _distanceFromStartToFinish = 0;
 
-    private void Start()
-    {
-        _relativePositionsFromIndex.Add(new Vector2(0, 10));
-        _relativePositionsFromIndex.Add(new Vector2(20, 0));
-        _relativePositionsFromIndex.Add(new Vector2(0, -10));
-        _relativePositionsFromIndex.Add(new Vector2(-20, 0));
-    }
+
 
     private void Update()
     {
         if (Input.GetKeyDown("space")) DisplayGraph();
     }
-    public Node GenerateGraph()
+    public void GenerateGraph()
     {
-        List<Node> nodesList = new List<Node>();
-        GameObject baseObject = Instantiate(_nodePrefab);
-        Node baseNode = baseObject.GetComponent<Node>();
-        nodesList.Add(baseNode);
-        baseNode._distanceFromStartRoom = 0;
-        _nodesCreated.Add(new Vector2(0, 0), baseNode);
+        
+        
+        _relativePositionsFromIndex.Clear();
 
-        while (nodesList.Count < _numberOfNodes + 2)
+        _relativePositionsFromIndex.Add(new Vector2(0, 10));
+        _relativePositionsFromIndex.Add(new Vector2(20, 0));
+        _relativePositionsFromIndex.Add(new Vector2(0, -10));
+        _relativePositionsFromIndex.Add(new Vector2(-20, 0));
+
+        
+        Node baseNode = new Node();
+        baseNode._nodePos = new Vector2(0, 0);
+        _nodesList.Add(baseNode);
+        positions.Add(baseNode._nodePos, baseNode);
+
+        while (_nodesList.Count < _numberOfNodes)
         {
-            bool nodeAdded = false;
-            int nodePos = 0;
-            int sideNode = 0;
-            while (!nodeAdded)
+            Node prev = _nodesList[_nodesList.Count - 1];
+
+            int sideNode = Random.Range(0, 4);
+
+            Vector2 newPos = prev._nodePos + _relativePositionsFromIndex[sideNode];
+
+            while (positions.ContainsKey(newPos))
             {
-                checkNeighbours(nodesList);
-                nodePos = Random.Range(0, nodesList.Count - 1);
-                sideNode = Random.Range(0, 3);
-                if(!_nodesCreated.ContainsKey(nodesList[nodePos]._nodePos +  _relativePositionsFromIndex[sideNode])) nodeAdded = nodesList[nodePos].setNode(sideNode);
+                sideNode = (sideNode + 1) % 4;
+                if (prev._sideNodes[sideNode] is not null)
+                {
+                    sideNode = (sideNode + 1) % 4;
+                }
+                newPos = prev._nodePos + _relativePositionsFromIndex[sideNode];
             }
-            nodesList.Add(nodesList[nodePos].getNode(sideNode));
-            Vector2 newNodePos = new Vector2(nodesList[nodePos]._nodePos.x + _relativePositionsFromIndex[sideNode].x, nodesList[nodePos]._nodePos.y + _relativePositionsFromIndex[sideNode].y);
-            _nodesCreated.Add(newNodePos, nodesList[nodePos].getNode(sideNode));
-            nodesList[nodePos].getNode(sideNode)._nodePos = newNodePos;
-            nodesList[nodePos].getNode(sideNode).setDistance();
+
+            bool deadLock = true;
+
+            for(int i = 0; i<4; i++)
+            {
+                if(!positions.ContainsKey(newPos + _relativePositionsFromIndex[i]))
+                {
+                    deadLock = false;
+                    break;
+                }
+            }
+
+            if(deadLock)
+            {
+                continue;
+            }
+
+            Node newNode = prev.setNode(sideNode);
+            newNode._nodePos = newPos;
+            positions.Add(newPos, newNode);
+            _nodesList.Add(newNode);
         }
-        _nodesList = nodesList;
-        setDistanceStartFinish();
-        return baseNode;
+
+        int adjacentRooms = 3;
+        while(_secretNode is null)
+        {
+            if(adjacentRooms <1)
+            {
+                //Retry all generation
+                break;
+            }
+            bool spawned = false;
+            for(int i = 0; i<_nodesList.Count; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Vector2 sidePos = _nodesList[i]._nodePos + _relativePositionsFromIndex[j];
+                    if (!positions.ContainsKey(sidePos))
+                    {
+                        int adjacents = 0;
+                        List<Node> adjacentNodes = new List<Node>();
+                        for(int k = 0; k<4; k++)
+                        {
+                            Vector2 pos = sidePos + _relativePositionsFromIndex[k];
+                            if (positions.ContainsKey(pos))
+                            {
+                                adjacents++;
+
+                                adjacentNodes.Add(positions[pos]);
+                            }
+                        }
+                        if (adjacents == adjacentRooms)
+                        {
+                            _secretNode = new Node();
+                            _secretNode._nodePos = sidePos;
+                            positions.Add(_secretNode._nodePos, _secretNode);
+                            Node adjacentNode = adjacentNodes[Random.Range(0, adjacentNodes.Count)];
+                            int dir = _relativePositionsFromIndex.IndexOf(adjacentNode._nodePos - _secretNode._nodePos);
+                            _secretNode.setNode(dir, adjacentNode);
+                            adjacentNode.setNode((dir + 2) % 4, _secretNode); 
+
+                            spawned = true;
+                            break;
+                        }
+                    }
+                }
+                if(spawned)
+                {
+                    break;
+                }
+            }
+            adjacentRooms--;
+        }
     }
 
     public void DisplayGraph()
@@ -68,54 +140,5 @@ public class CreateGraph : MonoBehaviour
     public List<Node> getnodes()
     {
         return _nodesList;
-    }
-
-    public void checkNeighbours(List<Node> nodes)
-    {
-        for (int i = 0; i< nodes.Count; i++)
-        {
-            for(int j = 0; j<4; j++)
-            {
-                if(nodes[i]._sideNodes[j] is null && _nodesCreated.ContainsKey(nodes[i]._nodePos + _relativePositionsFromIndex[j]))
-                {
-                    nodes[i].setNode(j, _nodesCreated[nodes[i]._nodePos + _relativePositionsFromIndex[j]]);
-                    switch(j) {
-                        case 0:
-                            _nodesCreated[nodes[i]._nodePos + _relativePositionsFromIndex[j]].setNode(2, nodes[i]);
-                            break;
-                        case 1:
-                            _nodesCreated[nodes[i]._nodePos + _relativePositionsFromIndex[j]].setNode(3, nodes[i]);
-                            break;
-                        case 2:
-                            _nodesCreated[nodes[i]._nodePos + _relativePositionsFromIndex[j]].setNode(0, nodes[i]);
-                            break;
-                        case 3:
-                            _nodesCreated[nodes[i]._nodePos + _relativePositionsFromIndex[j]].setNode(1, nodes[i]);
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
-    public void setDistanceStartFinish()
-    {
-        Node lastNode = _nodesList[0];
-        int lastNodeDistance = 0;
-        int lastIndex = 0;
-        for(int i = 1; i<_nodesList.Count; i++)
-        {
-            if(_nodesList[i]._distanceFromStartRoom >= lastNodeDistance)
-            {
-                lastNodeDistance = _nodesList[i]._distanceFromStartRoom;
-                lastNode = _nodesList[i];
-                lastIndex = i;
-            }
-        }
-        _nodesList.RemoveAt(lastIndex);
-        _nodesList.Add(lastNode);
-        _distanceFromStartToFinish = lastNodeDistance;
-        _finalNode = lastNode;
-        lastNode.name = "Final node";
     }
 }

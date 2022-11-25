@@ -6,67 +6,83 @@ public class LayoutManager : MonoBehaviour
 {
     [SerializeField] private Room _baseRoom;
     [SerializeField] private GameObject _grid;
-    [SerializeField] private Dictionary<Vector2, Room> _roomsCreated = new Dictionary<Vector2, Room>();
-    [SerializeField] private List<Vector2> _relativePositionsFromIndex = new List<Vector2>();
+    public List<Room> _roomsCreated = new List<Room>();
 
-    private void Awake()
-    {
-        _relativePositionsFromIndex.Add(new Vector2(0, 10));
-        _relativePositionsFromIndex.Add(new Vector2(20, 0));
-        _relativePositionsFromIndex.Add(new Vector2(0, -10));
-        _relativePositionsFromIndex.Add(new Vector2(-20, 0));
-    }
     public void CreateLayoutFromGraph(CreateGraph graph)
     {
-        List<Node> nodesList = graph.getnodes();
-        CreateRoomFromNode(nodesList[0], new Vector2(0, 0));
-    }
-
-    public void CreateRoomFromNode(Node node, Vector2 position)
-    {
-        Room newRoom = Instantiate(_baseRoom, position, Quaternion.identity, _grid.transform);
-        _roomsCreated.Add(newRoom.transform.position, newRoom);
-
-        Dictionary<int, Node> sideNodes = node.getSideNodes();
-        for( int i = 0; i<4; i++)
+        Room secretRoom = Instantiate(_baseRoom, graph._secretNode._nodePos, Quaternion.identity, _grid.transform);
+        secretRoom.gameObject.name = "Secret Room";
+        graph._secretNode.room = secretRoom;
+        for (int i = 0; i < graph.getnodes().Count; i++)
         {
-            if(sideNodes[i] != null)
-            {
-                if (!_roomsCreated.ContainsKey((Vector2) newRoom.transform.position + _relativePositionsFromIndex[i])) CreateRoomFromNode(sideNodes[i], (Vector2) newRoom.transform.position + _relativePositionsFromIndex[i]);
-            }
+            Node node = graph.getnodes()[i];
+            Room room = Instantiate(_baseRoom, node._nodePos, Quaternion.identity, _grid.transform);
+            room.gameObject.name = "Base Room " + i;
+            node.room = room;
+            _roomsCreated.Add(room);
         }
-    }
 
-    public void SpawnSecretRoom(CreateGraph graph)
-    {
-        bool isPlaced = false;
-        while(!isPlaced)
-        {
-            Node sideNode = graph.getnodes()[Random.Range(1, graph.getnodes().Count)];
-            for(int i = 0; i<4; i++)
+        for(int i = 0; i< graph.getnodes().Count; i++) {
+            Node node = graph.getnodes()[i];
+            for (int j = 0; j < 4; j++)
             {
-                if(sideNode.getSideNodes()[i] is null)
+                if (node._sideNodes[j] is not null)
                 {
-                    Debug.Log(sideNode.getSideNodes()[i]);
-                    for(int j = 0; j<4; j++)
+                    if(graph.getnodes().IndexOf(node._sideNodes[j]) > i)
                     {
-                        Vector2 otherSideRoom = sideNode._nodePos + _relativePositionsFromIndex[i] + _relativePositionsFromIndex[j];
-                        if (_roomsCreated.ContainsKey(otherSideRoom) && otherSideRoom != sideNode._nodePos)
-                        {
-                            Debug.Log(sideNode._nodePos);
-                            Debug.Log(sideNode._nodePos + _relativePositionsFromIndex[i]);
-                            Debug.Log(otherSideRoom);
-                            Room secretRoom = Instantiate(_baseRoom, sideNode._nodePos + _relativePositionsFromIndex[i], Quaternion.identity, _grid.transform);
-                            _roomsCreated.Add(secretRoom.transform.position, secretRoom);
-                            isPlaced = true;
-                            secretRoom.name = "Secret Room";
-                            break;
-                        }
+                        node.room.door = node.room._unlockableDoors[j];
                     }
-                    break;
+
+                    node.room._doorBlocks[j].SetActive(false);
+                    node.room._unlockableDoors[j].gameObject.SetActive(true);
+                    node.room._unlockableDoors[j].adjacent = node._sideNodes[j].room._unlockableDoors[(j + 2) % 4];
                 }
             }
         }
+        for (int j = 0; j < 4; j++)
+        {
+            if (graph._secretNode._sideNodes[j] is not null)
+            {
+                graph._secretNode.room._doorBlocks[j].SetActive(false);
+                graph._secretNode.room._unlockableDoors[j].gameObject.SetActive(true);
+                graph._secretNode.room._unlockableDoors[j].adjacent = graph._secretNode._sideNodes[j].room._unlockableDoors[(j + 2) % 4];
+            }
+        }
     }
+
+
+
+
+    //public void SpawnSecretRoom(CreateGraph graph)
+    //{
+    //    bool isPlaced = false;
+    //    while(!isPlaced)
+    //    {
+    //        Node sideNode = graph.getnodes()[Random.Range(1, graph.getnodes().Count)];
+    //        for(int i = 0; i<4; i++)
+    //        {
+    //            if(sideNode.getSideNodes()[i] is null)
+    //            {
+    //                Debug.Log(sideNode.getSideNodes()[i]);
+    //                for(int j = 0; j<4; j++)
+    //                {
+    //                    Vector2 otherSideRoom = sideNode._nodePos + _relativePositionsFromIndex[i] + _relativePositionsFromIndex[j];
+    //                    if (_roomsCreated.ContainsKey(otherSideRoom) && otherSideRoom != sideNode._nodePos)
+    //                    {
+    //                        Debug.Log(sideNode._nodePos);
+    //                        Debug.Log(sideNode._nodePos + _relativePositionsFromIndex[i]);
+    //                        Debug.Log(otherSideRoom);
+    //                        Room secretRoom = Instantiate(_baseRoom, sideNode._nodePos + _relativePositionsFromIndex[i], Quaternion.identity, _grid.transform);
+    //                        _roomsCreated.Add(secretRoom.transform.position, secretRoom);
+    //                        isPlaced = true;
+    //                        secretRoom.name = "Secret Room";
+    //                        break;
+    //                    }
+    //                }
+    //                break;
+    //            }
+    //        }
+    //    }
+    //}
 
 }
